@@ -2,11 +2,10 @@ import { Image, StyleSheet, Text, View, useWindowDimensions, ScrollView } from '
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-
+import logo from "../../assets/logo/logo.png"
 import { useForm } from 'react-hook-form'
 import { CustomeButton, CustomeInput, SocialSignInButtons } from '../../components'
 import { clr60, SigninScreen_Style } from '../../const'
-import { logo } from '../../assets'
 
 const SigninScreen = () => {
     const { height } = useWindowDimensions();
@@ -73,7 +72,6 @@ const SigninScreen = () => {
                     <CustomeButton
                         text='LogIn'
                         onPress={handleSubmit(onSiginPressed)}
-
                     />
                     <CustomeButton
                         text='Forgot Password ?'

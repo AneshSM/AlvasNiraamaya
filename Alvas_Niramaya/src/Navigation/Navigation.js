@@ -9,7 +9,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Home" component={DeskTopScreen} />
+      <Stack.Screen name="DeskTop" component={DeskTopScreen} />
         <Stack.Screen name="SignIn" component={SigninScreen} />
         <Stack.Screen name="SignUp" component={SignupScreen} />
         <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />

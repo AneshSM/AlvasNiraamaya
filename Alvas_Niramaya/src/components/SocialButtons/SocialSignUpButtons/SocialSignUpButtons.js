@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import CustomeButton from '../../CustomeButton/CustomeButton'
+
+
+import {CustomeButton} from '../../CustomComponents'
 
 const SocialSignUpButtons = () => {
     const onSignInGoogle = () => {

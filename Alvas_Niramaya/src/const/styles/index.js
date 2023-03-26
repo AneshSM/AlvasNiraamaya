@@ -1,1 +1,1 @@
-export {default as SigninScreen_Style} from './ScreenStyle'
+export {default} from './ScreenStyle'

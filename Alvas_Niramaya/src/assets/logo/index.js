@@ -1,1 +1,0 @@
-export {default as logo} from 'src\assets\logo\logo.png'

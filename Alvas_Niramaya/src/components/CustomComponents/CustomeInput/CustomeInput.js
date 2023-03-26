@@ -1,6 +1,6 @@
 import { StyleSheet, TextInput, View, Text } from 'react-native'
 import React from 'react'
-import { clr60 } from '../../const/Colour/color'
+import { clr60 } from '../../../const'
 import { Controller } from 'react-hook-form';
 
 const CustomeInput = ({

@@ -1,6 +1,6 @@
 import { clr10, clr30, clr60 } from "../Colour/color";
 
-export const SigninScreen_Style = {
+const SigninScreen_Style = {
     head: {
         height: 350,
         width: 510,
@@ -50,3 +50,5 @@ export const SigninScreen_Style = {
         width: 291,
     }
 }
+
+export default SigninScreen_Style

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native'
 
 import { Controller,useForm } from 'react-hook-form';
 import { CustomeButton, CustomeInput } from '../../components';
-
+import { clr60,clr30 } from '../../const';
 const ConfirmEmailScreen = () => {
     const { height } = useWindowDimensions();
     const { Code, setCode } = useState('')

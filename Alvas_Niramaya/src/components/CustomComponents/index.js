@@ -1,2 +1,2 @@
-export {default as CustomeButton} from './CustomeButton'
-export {default as CustomeInput} from './CustomeInput'
+export {default as CustomeButton} from './CustomeButton/CustomeButton'
+export {default as CustomeInput} from './CustomeInput/CustomeInput'

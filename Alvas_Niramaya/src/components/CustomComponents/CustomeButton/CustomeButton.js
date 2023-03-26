@@ -1,6 +1,6 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import { clr10, clr60 } from '../../const/Colour/color'
+import { clr10, clr60 } from '../../../const'
 
 const CustomeButton = ({ onPress, text, type = "Primary", bgColor, fgColor,brdr }) => {
     return (

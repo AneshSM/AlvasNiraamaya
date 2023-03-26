@@ -1,9 +1,8 @@
 import { Image, StyleSheet, Text, View, useWindowDimensions, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-import CustomeInput from '../../components/CustomeInput/CustomeInput';
-import CustomeButton from '../../components/CustomeButton/CustomeButton';
-import { clr30, clr60 } from '../../const/Colour/color';
+import { CustomeButton, CustomeInput, SocialSignInButtons } from '../../components'
+import { clr60, clr30 } from '../../const'
 import SocialSignUpButtons from '../../components/SocialButtons/SocialSignUpButtons/SocialSignUpButtons';
 
 import { useNavigation } from '@react-navigation/native'
