@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import {SafeAreaView, StyleSheet} from 'react-native';
 import Navigation from './src/Navigation/Navigation';
-import {COLORS} from './src/constants';
+import {COLORS, IMGS, ROUTES} from './src/constants';
 
 const App = () => {
   return (

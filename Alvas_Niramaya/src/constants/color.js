@@ -1,4 +1,6 @@
-export const bgclr = '#EDEDED';
-export const clr60 = '#FFFFFF';
-export const clr30 = '#92A65F';
-export const clr10 = '#3C5920';
+export default {
+  bgclr: '#EDEDED',
+  clr60: '#FFFFFF',
+  clr30: '#92A65F',
+  clr10: '#3C5920',
+};

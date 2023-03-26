@@ -9,8 +9,8 @@ export default {
   HOME_TAB: 'Home Tab',
   HOME_DRAWER: 'Home Drawer',
 
-  WALLET: 'Wallet',
-  WALLET_DRAWER: 'Wallet Drawer',
+  APPOINTMENT: 'Appointment',
+  APPOINTMENT_DRAWER: 'Appointment Drawer',
 
   NOTIFICATIONS: 'Notifications',
   NOTIFICATIONS_DRAWER: 'Notifications Drawer',

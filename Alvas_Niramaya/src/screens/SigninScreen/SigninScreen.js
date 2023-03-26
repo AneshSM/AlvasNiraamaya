@@ -33,7 +33,7 @@ const SigninScreen = () => {
   const onSiginPressed = data => {
     console.log(data);
     //Validate User
-    navigation.navigate('Home');
+    navigation.navigate('DeskTop');
   };
 
   const onForgotPasswordPressed = () => {
