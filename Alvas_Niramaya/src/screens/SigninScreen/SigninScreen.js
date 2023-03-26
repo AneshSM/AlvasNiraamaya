@@ -2,15 +2,11 @@ import { Image, StyleSheet, Text, View, useWindowDimensions, ScrollView } from '
 import React, { useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
 
-import Logo from "../../assets/logo/logo.png"
-import { clr60, } from '../../const/Colour/color'
-import { SigninScreen_Style } from '../../const/styles/ScreenStyle'
 
-import CustomeInput from '../../components/CustomeInput/CustomeInput';
-import CustomeButton from '../../components/CustomeButton/CustomeButton';
-import SocialSignInButtons from '../../components/SocialButtons/SocialSignInButtons/SocialSignInButtons';
-
-import { useForm, Controller } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import { CustomeButton, CustomeInput, SocialSignInButtons } from '../../components'
+import { clr60, SigninScreen_Style } from '../../const'
+import { logo } from '../../assets'
 
 const SigninScreen = () => {
     const { height } = useWindowDimensions();
@@ -46,7 +42,7 @@ const SigninScreen = () => {
             <View style={styles.root}>
                 <View style={[SigninScreen_Style.head]}>
                     <View style={[SigninScreen_Style.logo]}>
-                        <Image source={Logo} style={[styles.logo, SigninScreen_Style.image]} resizeMode='contain'></Image>
+                        <Image source={logo} style={[styles.logo, SigninScreen_Style.image]} resizeMode='contain'></Image>
                     </View>
                     <View style={[SigninScreen_Style.title]}>
                         <Text style={[SigninScreen_Style.text, SigninScreen_Style.titleText1]}>Alva’s </Text>

@@ -1,4 +1,5 @@
-import { clr10, clr30, clr60 } from "../Colour/color"
+import { clr10, clr30, clr60 } from "../Colour/color";
+
 export const SigninScreen_Style = {
     head: {
         height: 350,

@@ -1,1 +1,1 @@
-export {default} from "../SocialSignInButtons/SocialSignInButtons"
+export {default} from "./SocialSignUpButtons"

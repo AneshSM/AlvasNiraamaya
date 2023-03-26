@@ -1,14 +1,10 @@
 import { Image, StyleSheet, Text, View, useWindowDimensions, ScrollView } from 'react-native'
 import React, { useState } from 'react'
 
-import CustomeInput from '../../components/CustomeInput/CustomeInput';
-import CustomeButton from '../../components/CustomeButton/CustomeButton';
-import { clr30, clr60 } from '../../const/Colour/color';
-import SocialSignUpButtons from '../../components/SocialButtons/SocialSignUpButtons/SocialSignUpButtons';
-
 import {useNavigation} from '@react-navigation/native'  
 
 import { Controller,useForm } from 'react-hook-form';
+import { CustomeButton, CustomeInput } from '../../components';
 
 const ConfirmEmailScreen = () => {
     const { height } = useWindowDimensions();
