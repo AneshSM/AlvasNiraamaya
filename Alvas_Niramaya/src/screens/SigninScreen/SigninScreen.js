@@ -15,8 +15,8 @@ import {
   CustomeInput,
   SocialSignInButtons,
 } from '../../components';
-import {clr60, SigninScreen_Style} from '../../const';
-import {IMGS, ROUTES} from '../../constants';
+import {COLORS, IMGS, ROUTES} from '../../constants';
+import {SigninScreen_Style} from '../../styles';
 
 const SigninScreen = () => {
   const {height} = useWindowDimensions();
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: clr60,
+    backgroundColor: COLORS.clr60,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 50,

@@ -6,8 +6,7 @@ import {
   ProfileScreen,
 } from '../screens';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {clr10, clr30, clr60} from '../const';
-import {bgclr} from '../const/Colour';
+import {COLORS} from '../constants';
 const Tab = createBottomTabNavigator();
 
 function BottomTab() {
@@ -15,7 +14,7 @@ function BottomTab() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         headerShown: false,
-        tabBarActiveTintColor: clr30,
+        tabBarActiveTintColor: COLORS.clr30,
         tabBarIcon: ({color, size, focused}) => {
           let iconName;
 

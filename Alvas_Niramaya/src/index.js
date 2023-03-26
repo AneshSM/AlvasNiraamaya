@@ -18,4 +18,4 @@ export {
   SocialSignUpButtons,
 } from './components';
 export {COLORS, IMGS, ROUTES} from './constants';
-export {ScreenStyle} from './styles';
+export {SigninScreen_Style} from './styles';

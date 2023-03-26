@@ -1,2 +1,2 @@
-import ScreenStyle from './ScreenStyle';
-export {ScreenStyle};
+import SigninScreen_Style from './ScreenStyle';
+export {SigninScreen_Style};
