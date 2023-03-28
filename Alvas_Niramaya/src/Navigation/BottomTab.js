@@ -5,7 +5,7 @@ import {
   MapScreen,
   ProfileScreen,
 } from '../screens';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {COLORS, ROUTES} from '../constants';
 const Tab = createBottomTabNavigator();
 
@@ -14,22 +14,21 @@ function BottomTab() {
     <Tab.Navigator
       screenOptions={({route}) => ({
         headerShown: false,
+        tabBarActiveBackgroundColor: 'transparent',
         tabBarActiveTintColor: COLORS.clr30,
         tabBarIcon: ({color, size, focused}) => {
           let iconName;
           if (route.name === ROUTES.HOME) {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === ROUTES.SETTINGS_NAVIGATOR) {
-            iconName = focused ? 'settings' : 'settings-outline';
-          } else if (route.name === ROUTES.WALLET) {
-            iconName = focused ? 'wallet' : 'wallet-outline';
-          } else if (route.name === ROUTES.NOTIFICATIONS) {
-            iconName = focused
-              ? 'md-notifications-sharp'
-              : 'md-notifications-outline';
+          } else if (route.name === ROUTES.APPOINTMENT) {
+            iconName = focused ? 'bookmark' : 'bookmark-outline';
+          } else if (route.name === ROUTES.MAP) {
+            iconName = focused ? 'map' : 'map-outline'; 
+          } else if (route.name === ROUTES.PROFILE) {
+            iconName = focused ? 'person' : 'person-outline';
           }
 
-          return <Icon name={iconName} size={22} color={color}></Icon>;
+          return <Icon name={iconName} size={size} color={color}></Icon>;
         },
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />

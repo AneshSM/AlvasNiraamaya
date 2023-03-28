@@ -6,11 +6,16 @@ export default {
   FORGOT_PASSWORD: 'Forgot Password',
 
   HOME: 'Home',
-  HOME_TAB: 'Home Tab',
   HOME_DRAWER: 'Home Drawer',
 
   APPOINTMENT: 'Appointment',
   APPOINTMENT_DRAWER: 'Appointment Drawer',
+
+  MAP: 'Map',
+  MAP_DRAWER: 'Map Drawer',
+
+  PROFILE: 'Profile',
+  PROFILE_DRAWER: 'Profile Drawer',
 
   NOTIFICATIONS: 'Notifications',
   NOTIFICATIONS_DRAWER: 'Notifications Drawer',
@@ -20,5 +25,4 @@ export default {
   SETTINGS_NAVIGATOR: 'Settings Navigator',
 
   SETTINGS_DETAIL: 'Settings Detail',
-  PROFILE: 'My Profile',
 };
