@@ -10,6 +10,7 @@ import {
   SafeAreaView,
   // ScrollView,
   StatusBar,
+  StyleSheet,
   // StyleSheet,
   // Text,
   useColorScheme,
@@ -17,6 +18,7 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {Navigation} from './src';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -26,7 +28,7 @@ function App(): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaView style={style.root}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
@@ -34,9 +36,16 @@ function App(): JSX.Element {
       <View
         style={{
           backgroundColor: isDarkMode ? Colors.black : Colors.white,
-        }}></View>
+          flex: 1,
+        }}>
+        <Navigation />
+      </View>
     </SafeAreaView>
   );
 }
+
+const style = StyleSheet.create({
+  root: {flex: 1},
+});
 
 export default App;
