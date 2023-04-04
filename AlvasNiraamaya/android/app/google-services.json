@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "87437797407",
+    "project_id": "niraamaya-204",
+    "storage_bucket": "niraamaya-204.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:87437797407:android:f7e48f067dbef323920d2a",
+        "android_client_info": {
+          "package_name": "com.alvasniraamaya"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "87437797407-vbdr6gv6g1n7inj34lj92pb15e4ghr96.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.alvasniraamaya",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "87437797407-gu72a1u32nkku2ifvp19hn3j8heqbn30.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3K2506bgDNpSg9AqC8SxkuXy3B3u5lNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "87437797407-gu72a1u32nkku2ifvp19hn3j8heqbn30.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

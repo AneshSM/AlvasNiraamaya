@@ -26,26 +26,24 @@ function App(): JSX.Element {
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
-
+  const style = {
+    root: {flex: 1},
+    root_view: {
+      backgroundColor: isDarkMode ? Colors.black : Colors.white,
+      flex: 1,
+    },
+  };
   return (
     <SafeAreaView style={style.root}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <View
-        style={{
-          backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          flex: 1,
-        }}>
+      <View style={style.root_view}>
         <Navigation />
       </View>
     </SafeAreaView>
   );
 }
-
-const style = StyleSheet.create({
-  root: {flex: 1},
-});
 
 export default App;
