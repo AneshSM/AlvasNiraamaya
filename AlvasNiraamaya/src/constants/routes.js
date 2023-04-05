@@ -1,6 +1,6 @@
+/* eslint-disable prettier/prettier */
 export default {
-  PRIMARY_TITLE: "Alva's",
-  SECONDARY_TITLE: 'Niraamaya',
+  TITLE: "Alva's Niraamaya",
   LOGIN: 'Login',
   REGISTER: 'Register',
   FORGOT_PASSWORD: 'Forgot Password',
