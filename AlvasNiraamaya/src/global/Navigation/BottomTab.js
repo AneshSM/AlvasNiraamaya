@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,11 +37,7 @@ function BottomTab() {
           }
 
           return (
-            <Icon
-              style={style.icon}
-              name={iconName}
-              size={28}
-              color={color}></Icon>
+            <Icon style={style.icon} name={iconName} size={28} color={color} />
           );
         },
       })}>

@@ -1,4 +1,4 @@
-import {View, Text} from 'react-native';
+import {View, Text, ImageBackground} from 'react-native';
 import React from 'react';
 import {BottomTab} from '../../global/Navigation';
 

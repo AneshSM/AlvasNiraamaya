@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {COLORS} from '../constants';
 
 const bottomTabStyle = {
