@@ -8,6 +8,8 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
+import auth from '@react-native-firebase/auth';
+
 import {
   CustomeButton,
   CustomeInput,
@@ -30,9 +32,39 @@ const SignupScreen = () => {
     console.warn('SignIn');
     navigation.navigate('SignIn');
   };
-  const onSignUpPressed = () => {
-    console.warn('SignUp');
-    navigation.navigate('ConfirmEmail');
+
+  const [alert, setAlert] = useState();
+  const [mailStatus, setMailStatus] = useState(false);
+
+  const showAlert = setTimeout(() => {
+    setMailStatus(false);
+    clearTimeout(showAlert);
+  }, 10000);
+
+  const onSignUpPressed = data => {
+    const {Email, Password} = data;
+    // Authentication
+    auth()
+      .createUserWithEmailAndPassword(Email, Password)
+      .then(() => {
+        // Navigation
+        navigation.navigate('ConfirmEmail');
+        console.log('User account created & signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          setMailStatus(true);
+          setAlert('That email address is already in use!');
+          console.log('That email address is already in use!');
+          return;
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
   };
 
   const {
@@ -136,6 +168,11 @@ const SignupScreen = () => {
             onPress={onSigInPressed}
             type="Tertiary"
           />
+          {mailStatus && (
+            <View style={styles.alert_container}>
+              <Text style={styles.message}>{alert}</Text>
+            </View>
+          )}
         </ScrollView>
       </View>
     </View>
@@ -172,5 +209,16 @@ const styles = StyleSheet.create({
   text: {
     color: 'black',
     fontWeight: 'bold',
+  },
+
+  alert_container: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: COLORS.alert,
+    borderRadius: 10,
+  },
+  message: {
+    color: COLORS.clr60,
+    fontSize: 19,
   },
 });

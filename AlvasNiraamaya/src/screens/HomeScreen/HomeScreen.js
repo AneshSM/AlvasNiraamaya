@@ -1,6 +1,5 @@
 import {View, StyleSheet, Text, ImageBackground} from 'react-native';
 import React from 'react';
-import {COLORS} from '../../constants';
 import {CardComponent} from '../../components';
 import bgIMG from '../../assets/niramaya.png';
 

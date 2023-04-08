@@ -1,3 +1,5 @@
+import React, {useState} from 'react';
+
 import {
   Image,
   StyleSheet,
@@ -6,10 +8,9 @@ import {
   useWindowDimensions,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 
-import {useForm} from 'react-hook-form';
 import {
   CustomeButton,
   CustomeInput,
