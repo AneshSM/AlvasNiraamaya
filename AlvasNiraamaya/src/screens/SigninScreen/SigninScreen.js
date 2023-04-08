@@ -11,6 +11,8 @@ import {
 import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
 
+import auth from '@react-native-firebase/auth';
+
 import {
   CustomeButton,
   CustomeInput,
@@ -30,16 +32,41 @@ const SigninScreen = () => {
 
   // console.log(errors);
 
+  const [alert, setAlert] = useState();
+  const [mailStatus, setMailStatus] = useState(false);
+
+  const showAlert = setTimeout(() => {
+    setMailStatus(false);
+    clearTimeout(showAlert);
+  }, 10000);
+
   const onSiginPressed = data => {
     console.log(data);
-    //Validate User
-    navigation.navigate('DeskTop');
+    const {Email, Password} = data;
+    // Authentication
+    auth()
+      .signInWithEmailAndPassword(Email, Password)
+      .then(() => {
+        // Navigation
+        navigation.navigate('DeskTop');
+        console.log('User signed in!');
+      })
+      .catch(error => {
+        if (error.code === 'auth/user-not-found') {
+          setMailStatus(true);
+          setAlert('That email address is not registered!');
+          console.log('That email address is not registered!');
+          return;
+        }
+        console.error(error);
+      });
   };
 
   const onForgotPasswordPressed = () => {
     console.warn('Forgot Password');
     navigation.navigate('ForgotPassword');
   };
+
   const onSignUpPressed = () => {
     console.warn('SignUp');
     navigation.navigate('SignUp');
@@ -65,7 +92,7 @@ const SigninScreen = () => {
           contentContainerStyle={SigninScreen_Style.form}>
           <CustomeInput
             placeholder="Username"
-            name="Username"
+            name="Email"
             control={control}
             rules={{required: 'Username is required'}}
           />
@@ -95,6 +122,11 @@ const SigninScreen = () => {
             onPress={onSignUpPressed}
             type="Tertiary"
           />
+          {mailStatus && (
+            <View style={styles.alert_container}>
+              <Text style={styles.message}>{alert}</Text>
+            </View>
+          )}
         </ScrollView>
       </View>
     </View>
@@ -102,3 +134,16 @@ const SigninScreen = () => {
 };
 
 export default SigninScreen;
+
+const styles = StyleSheet.create({
+  alert_container: {
+    width: '100%',
+    padding: 10,
+    backgroundColor: COLORS.alert,
+    borderRadius: 10,
+  },
+  message: {
+    color: COLORS.clr60,
+    fontSize: 19,
+  },
+});

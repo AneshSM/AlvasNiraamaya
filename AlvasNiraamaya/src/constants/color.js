@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 export default {
   bgclr: '#EDEDED',
   clr60: '#FFFFFF',
