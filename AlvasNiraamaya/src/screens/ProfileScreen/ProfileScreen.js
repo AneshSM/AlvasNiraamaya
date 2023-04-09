@@ -26,6 +26,7 @@ const ProfileScreen = () => {
     <>
       <View style={styles.container}>
         <ProfileCard />
+        <UserDetailCard />
         <AppointmentCard />
         <HelpCard />
         <View style={styles.logoutButton}>
@@ -35,7 +36,13 @@ const ProfileScreen = () => {
     </>
   );
 };
-
+const UserDetailCard = () => {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.cardHeader}>User Details</Text>
+    </View>
+  );
+};
 const AppointmentCard = () => {
   return (
     <View style={styles.card}>
@@ -72,6 +79,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 16,
     marginBottom: 16,
+    elevation: 6,
   },
   cardHeader: {
     fontSize: 18,
@@ -104,6 +112,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 40,
     justifySelf: 'flex-end',
+    elevation: 9,
   },
   logoutButtonText: {
     color: '#fff',
