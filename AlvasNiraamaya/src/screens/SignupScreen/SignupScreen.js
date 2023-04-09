@@ -11,6 +11,7 @@ import React, {useState} from 'react';
 import auth from '@react-native-firebase/auth';
 
 import {
+  CustomText,
   CustomeButton,
   CustomeInput,
   SocialSignInButtons,
@@ -78,7 +79,9 @@ const SignupScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>Create New Account</Text>
+      <CustomText factor={12} style={styles.title}>
+        Create New Account
+      </CustomText>
       <View style={[styles.container, {padding: height * 0.04}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CustomeInput
@@ -157,11 +160,16 @@ const SignupScreen = () => {
             text="Create Account"
             onPress={handleSubmit(onSignUpPressed)}
           />
-          <Text style={styles.text}>
-            By Registering, you confirm that you accept our{' '}
-            <Text style={styles.link}>Terms of Use</Text> and{' '}
-            <Text style={styles.link}>Privacy and Policy</Text>
-          </Text>
+          <CustomText factor={29} style={styles.text}>
+            By Registering, you confirm that you accept our
+            <CustomText factor={29} style={styles.link}>
+              {' Terms of Use'}
+            </CustomText>
+            {' and '}
+            <CustomText factor={29} style={styles.link}>
+              Privacy and Policy
+            </CustomText>
+          </CustomText>
           <SocialSignUpButtons />
           <CustomeButton
             text="Alreafy have an account ? Login"
@@ -170,7 +178,9 @@ const SignupScreen = () => {
           />
           {mailStatus && (
             <View style={styles.alert_container}>
-              <Text style={styles.message}>{alert}</Text>
+              <CustomText factor={30} style={styles.message}>
+                {alert}
+              </CustomText>
             </View>
           )}
         </ScrollView>
@@ -220,5 +230,6 @@ const styles = StyleSheet.create({
   message: {
     color: COLORS.clr60,
     fontSize: 19,
+    textAlign: 'center',
   },
 });

@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {firebase} from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 
-import {CustomeButton} from '../../components';
+import {CustomText, CustomeButton} from '../../components';
 
 const ProfileScreen = () => {
   const user = firebase.auth().currentUser;
@@ -20,7 +20,7 @@ const ProfileScreen = () => {
 
   return (
     <View>
-      <Text>{user != null && 'User email: ' + user.email}</Text>
+      <CustomText>{user != null && 'User email: ' + user.email}</CustomText>
       <CustomeButton text="Logout" onPress={onSignOutPressed} />
     </View>
   );

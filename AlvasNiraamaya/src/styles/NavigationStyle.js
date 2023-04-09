@@ -14,6 +14,7 @@ const bottomTabStyle = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-evenly',
+    elevation: 10,
   },
   icon: {
     paddingTop: 15,

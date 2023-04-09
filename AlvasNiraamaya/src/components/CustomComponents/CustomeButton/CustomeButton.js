@@ -1,6 +1,7 @@
 import {Pressable, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../../constants';
+import CustomText from '../../CustomText/CustomText';
 
 const CustomeButton = ({
   onPress,
@@ -18,14 +19,15 @@ const CustomeButton = ({
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor, borderWidth: 1} : {},
       ]}>
-      <Text
-        style={[
-          styles.text,
-          styles[`text_${type}`],
-          fgColor ? {color: fgColor} : {},
-        ]}>
+      <CustomText
+        factor={22}
+        style={{
+          ...styles.text,
+          ...styles[`text_${type}`],
+          ...(fgColor ? {color: fgColor} : {}),
+        }}>
         {text}
-      </Text>
+      </CustomText>
     </Pressable>
   );
 };

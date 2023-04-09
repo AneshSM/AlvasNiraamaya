@@ -11,7 +11,7 @@ import React, {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import {Controller, useForm} from 'react-hook-form';
-import {CustomeButton, CustomeInput} from '../../components';
+import {CustomText, CustomeButton, CustomeInput} from '../../components';
 import {COLORS} from '../../constants';
 const ConfirmEmailScreen = () => {
   const {height} = useWindowDimensions();
@@ -42,7 +42,9 @@ const ConfirmEmailScreen = () => {
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>Confirm Your Email</Text>
+      <CustomText factor={15} style={styles.title}>
+        Confirm Your Email
+      </CustomText>
       <View style={[styles.container, {padding: height * 0.04}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CustomeInput

@@ -17,6 +17,7 @@ import auth from '@react-native-firebase/auth';
 
 import {
   ColumnContainer,
+  CustomText,
   CustomeButton,
   CustomeInput,
   SocialSignInButtons,
@@ -112,7 +113,9 @@ const SigninScreen = () => {
           />
           {mailStatus && (
             <View style={styles.alert_container}>
-              <Text style={styles.message}>{alert}</Text>
+              <CustomText factor={30} style={styles.message}>
+                {alert}
+              </CustomText>
             </View>
           )}
         </ScrollView>
@@ -140,9 +143,9 @@ const TopCard = () => {
           resizeMode="contain"
         />
       </View>
-      <Text style={(styles.heading, SigninScreen_Style.text)}>
+      <CustomText factor={9} style={(styles.heading, SigninScreen_Style.text)}>
         {ROUTES.TITLE}
-      </Text>
+      </CustomText>
     </View>
   );
 };
@@ -160,6 +163,7 @@ const styles = StyleSheet.create({
   message: {
     color: COLORS.clr60,
     fontSize: 19,
+    textAlign: 'center',
   },
   topCard: {
     width: CARD_WIDTH,

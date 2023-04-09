@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 
-import {CustomeButton, CustomeInput} from '../../components';
+import {CustomText, CustomeButton, CustomeInput} from '../../components';
 
 import {useNavigation} from '@react-navigation/native';
 
@@ -39,7 +39,9 @@ const ForgotPassword = () => {
 
   return (
     <View style={styles.root}>
-      <Text style={styles.title}>Reset Your Password</Text>
+      <CustomText factor={15} style={styles.title}>
+        Reset Your Password
+      </CustomText>
       <View style={[styles.container, {padding: height * 0.04}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CustomeInput

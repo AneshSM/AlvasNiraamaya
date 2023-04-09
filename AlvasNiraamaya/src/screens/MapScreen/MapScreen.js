@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Image, Text, StyleSheet, Dimensions} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
+import {CustomText} from '../../components';
 
 const {width, height} = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
@@ -33,6 +34,8 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 10,
+    padding: 15,
+    paddingRight: 10,
   },
   directionCard: {
     flexDirection: 'row',
@@ -42,6 +45,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F0F0',
     borderRadius: 10,
     marginBottom: 10,
+    elevation: 15,
   },
   directionIcon: {
     width: 50,
@@ -80,16 +84,18 @@ const GoogleMapsCard = () => {
 const DirectionsCard = () => {
   return (
     <View style={styles.directionsContainer}>
-      <Text style={styles.directionsTitle}>Directions</Text>
+      <CustomText factor={20} style={styles.directionsTitle}>
+        Directions
+      </CustomText>
       <View style={styles.directionCard}>
         {/* Replace 'car.png' with your own icon */}
         {/* <Image style={styles.directionIcon} source={require('./car.png')} /> */}
-        <Text style={styles.directionText}>From: Moodabidre</Text>
+        <CustomText style={styles.directionText}>From: Moodabidre</CustomText>
       </View>
       <View style={styles.directionCard}>
         {/* Replace 'train.png' with your own icon */}
         {/* <Image style={styles.directionIcon} source={require('./train.png')} /> */}
-        <Text style={styles.directionText}>From: Mangalore</Text>
+        <CustomText style={styles.directionText}>From: Mangalore</CustomText>
       </View>
     </View>
   );

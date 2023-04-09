@@ -17,6 +17,8 @@ export {
   SocialSignInButtons,
   SocialSignUpButtons,
   CardComponent,
+  ColumnContainer,
+  CustomText,
 } from './components';
 export {COLORS, IMGS, ROUTES} from './constants';
 export {SigninScreen_Style, bottomTabStyle} from './styles';
