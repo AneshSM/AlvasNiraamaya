@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import React, {useState} from 'react';
 
 import {
@@ -7,6 +8,7 @@ import {
   View,
   useWindowDimensions,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
@@ -14,6 +16,7 @@ import {useNavigation} from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
 import {
+  ColumnContainer,
   CustomeButton,
   CustomeInput,
   SocialSignInButtons,
@@ -72,24 +75,10 @@ const SigninScreen = () => {
     navigation.navigate('SignUp');
   };
 
-  return (
-    <View style={SigninScreen_Style.root}>
-      <View style={[SigninScreen_Style.head]}>
-        <View style={[SigninScreen_Style.logo]}>
-          <Image
-            source={IMGS.logo}
-            style={[SigninScreen_Style.image]}
-            resizeMode="contain"
-          />
-        </View>
-        <View style={[SigninScreen_Style.title]}>
-          <Text style={[SigninScreen_Style.text]}>{ROUTES.TITLE}</Text>
-        </View>
-      </View>
-      <View style={[SigninScreen_Style.container]}>
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={SigninScreen_Style.form}>
+  const BottomCard = () => {
+    return (
+      <View style={styles.bottomCard}>
+        <ScrollView>
           <CustomeInput
             placeholder="Username"
             name="Email"
@@ -109,7 +98,6 @@ const SigninScreen = () => {
             }}
             secureTextEntry
           />
-
           <CustomeButton text="LogIn" onPress={handleSubmit(onSiginPressed)} />
           <CustomeButton
             text="Forgot Password ?"
@@ -129,12 +117,39 @@ const SigninScreen = () => {
           )}
         </ScrollView>
       </View>
-    </View>
+    );
+  };
+
+  return (
+    <ColumnContainer>
+      <TopCard />
+      <BottomCard />
+    </ColumnContainer>
   );
 };
 
 export default SigninScreen;
 
+const TopCard = () => {
+  return (
+    <View style={styles.topCard}>
+      <View style={(styles.logoContainer, SigninScreen_Style.logo)}>
+        <Image
+          style={(styles.logo, SigninScreen_Style.image)}
+          source={IMGS.logo}
+          resizeMode="contain"
+        />
+      </View>
+      <Text style={(styles.heading, SigninScreen_Style.text)}>
+        {ROUTES.TITLE}
+      </Text>
+    </View>
+  );
+};
+
+const {width} = Dimensions.get('window');
+
+const CARD_WIDTH = width;
 const styles = StyleSheet.create({
   alert_container: {
     width: '100%',
@@ -145,5 +160,21 @@ const styles = StyleSheet.create({
   message: {
     color: COLORS.clr60,
     fontSize: 19,
+  },
+  topCard: {
+    width: CARD_WIDTH,
+    borderRadius: 10,
+    elevation: 3,
+    padding: 10,
+    alignItems: 'center',
+    backgroundColor: COLORS.clr30,
+  },
+  bottomCard: {
+    width: CARD_WIDTH,
+    borderRadius: 10,
+    backgroundColor: COLORS.clr60,
+    elevation: 3,
+    padding: 30,
+    flex: 1,
   },
 });
