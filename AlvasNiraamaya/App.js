@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   // ScrollView,
@@ -15,14 +15,20 @@ import {
   // useColorScheme,
   // View,
 } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 // import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {Navigation} from './src';
 
-function App(): JSX.Element {
+function App() {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   const style = {
     root: {flex: 1},
   };
+
   return (
     <SafeAreaView style={style.root}>
       <Navigation />

@@ -167,7 +167,6 @@ const styles = StyleSheet.create({
   },
   topCard: {
     width: CARD_WIDTH,
-    borderRadius: 10,
     elevation: 3,
     padding: 10,
     alignItems: 'center',
