@@ -6,19 +6,11 @@
  */
 
 import React, {useEffect} from 'react';
-import {
-  SafeAreaView,
-  // ScrollView,
-  // StatusBar,
-  // StyleSheet,
-  // Text,
-  // useColorScheme,
-  // View,
-} from 'react-native';
+import {SafeAreaView} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
-// import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {Navigation} from './src';
+import Router from './src/Router/Router';
+import {AuthProvider} from './src/context/AuthProvider';
 
 function App() {
   useEffect(() => {
@@ -30,9 +22,11 @@ function App() {
   };
 
   return (
-    <SafeAreaView style={style.root}>
-      <Navigation />
-    </SafeAreaView>
+    <AuthProvider>
+      <SafeAreaView style={style.root}>
+        <Router />
+      </SafeAreaView>
+    </AuthProvider>
   );
 }
 

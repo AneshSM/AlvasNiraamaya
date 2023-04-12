@@ -1,3 +1,4 @@
+export {AppStack, AuthStack} from './stack';
 export {
   ConfirmEmailScreen,
   DeskTopScreen,

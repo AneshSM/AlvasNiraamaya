@@ -1,9 +1,18 @@
-/* eslint-disable prettier/prettier */
 export default {
   TITLE: "Alva's Niraamaya",
+
+  // auth
+  SIGNIN: 'SignIn',
+  SIGNUP: 'SignUp',
+
+  CONFIRM_EMAIL: 'Confirm Email',
+  NEW_PASSWORD: 'New Password',
+  FORGOT_PASSWORD: 'Forgot Password',
+
+  MAIN: 'DeskTop',
+
   LOGIN: 'Login',
   REGISTER: 'Register',
-  FORGOT_PASSWORD: 'Forgot Password',
 
   HOME: 'Home',
   HOME_DRAWER: 'Home Drawer',

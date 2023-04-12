@@ -6,7 +6,7 @@ import {
   useWindowDimensions,
   ScrollView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import auth from '@react-native-firebase/auth';
 
@@ -19,9 +19,13 @@ import {
 import SocialSignUpButtons from '../../components/SocialButtons/SocialSignUpButtons/SocialSignUpButtons';
 
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
 
-import {Controller, useForm} from 'react-hook-form';
+// constants
 import {COLORS} from '../../constants';
+
+// context
+import {AuthContext} from '../../context/AuthProvider';
 
 const SignupScreen = () => {
   const {height} = useWindowDimensions();
@@ -42,30 +46,14 @@ const SignupScreen = () => {
     clearTimeout(showAlert);
   }, 10000);
 
+  // Context
+  const {signup, signupError, singupMessage} = useContext(AuthContext);
+
   const onSignUpPressed = data => {
+    signupError && setMailStatus(true) && setAlert(singupMessage);
     const {Email, Password} = data;
     // Authentication
-    auth()
-      .createUserWithEmailAndPassword(Email, Password)
-      .then(() => {
-        // Navigation
-        navigation.navigate('ConfirmEmail');
-        console.log('User account created & signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          setMailStatus(true);
-          setAlert('That email address is already in use!');
-          console.log('That email address is already in use!');
-          return;
-        }
-
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-
-        console.error(error);
-      });
+    signup(Email, Password);
   };
 
   const {

@@ -1,9 +1,12 @@
 import {View, StyleSheet, Text, ImageBackground} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {CardComponent} from '../../components';
 import bgIMG from '../../assets/niramaya.png';
+import {AuthContext} from '../../context/AuthProvider';
 
 const HomeScreen = () => {
+  const {user} = useContext(AuthContext);
+
   return (
     <View style={homeStyle.root}>
       <ImageBackground
@@ -11,7 +14,7 @@ const HomeScreen = () => {
         resizeMode="cover"
         style={homeStyle.bgImg}>
         <CardComponent>
-          <Text style={homeStyle.fontStyles}>Departments</Text>
+          <Text style={homeStyle.fontStyles}>{user.email}</Text>
         </CardComponent>
         <CardComponent>
           <Text style={homeStyle.fontStyles}>Doctors</Text>

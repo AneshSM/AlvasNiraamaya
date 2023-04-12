@@ -1,10 +1,9 @@
-/* eslint-disable react/no-unstable-nested-components */
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 
+// modules
 import {
   Image,
   StyleSheet,
-  Text,
   View,
   useWindowDimensions,
   ScrollView,
@@ -12,9 +11,9 @@ import {
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
-
 import auth from '@react-native-firebase/auth';
 
+// Components
 import {
   ColumnContainer,
   CustomText,
@@ -22,8 +21,13 @@ import {
   CustomeInput,
   SocialSignInButtons,
 } from '../../components';
+
+// constants
 import {COLORS, IMGS, ROUTES} from '../../constants';
+
+// styles
 import {SigninScreen_Style} from '../../styles';
+import {AuthContext} from '../../context/AuthProvider';
 
 const SigninScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -44,26 +48,20 @@ const SigninScreen = () => {
     clearTimeout(showAlert);
   }, 10000);
 
+  const {signin, signinError, signinMessage} = useContext(AuthContext);
+
   const onSiginPressed = data => {
-    console.log(data);
     const {Email, Password} = data;
     // Authentication
-    auth()
-      .signInWithEmailAndPassword(Email, Password)
-      .then(() => {
-        // Navigation
-        navigation.navigate('DeskTop');
-        console.log('User signed in!');
-      })
-      .catch(error => {
-        if (error.code === 'auth/user-not-found') {
-          setMailStatus(true);
-          setAlert('That email address is not registered!');
-          console.log('That email address is not registered!');
-          return;
-        }
-        console.error(error);
-      });
+    try {
+      signin(Email, Password);
+    } catch (error) {
+      if (error.message === 'auth/email-already-in-use') {
+        setMailStatus(true);
+        setAlert('That email address is already in use');
+      }
+      console.log('hi');
+    }
   };
 
   const onForgotPasswordPressed = () => {

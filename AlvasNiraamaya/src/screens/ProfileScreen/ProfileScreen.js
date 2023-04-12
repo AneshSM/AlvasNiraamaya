@@ -1,21 +1,17 @@
 import {View, Text, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import {useNavigation} from '@react-navigation/native';
 import {firebase} from '@react-native-firebase/auth';
 import auth from '@react-native-firebase/auth';
 
 import {CustomText, CustomeButton, ProfileCard} from '../../components';
+import {AuthContext} from '../../context/AuthProvider';
 
 const ProfileScreen = () => {
-  const user = firebase.auth().currentUser;
-  const navigation = useNavigation();
-
+  const {user, signout} = useContext(AuthContext);
   const onSignOutPressed = () => {
-    auth()
-      .signOut()
-      .then(() => console.log('User signed out!'));
-    navigation.navigate('SignIn');
+    signout();
   };
 
   return (
@@ -26,20 +22,18 @@ const ProfileScreen = () => {
     <>
       <View style={styles.container}>
         <ProfileCard />
-        <UserDetailCard />
+        <UserDetailCard email={user.email} />
         <AppointmentCard />
         <HelpCard />
-        <View style={styles.logoutButton}>
-          <Text style={styles.logoutButtonText}>Log Out</Text>
-        </View>
+        <CustomeButton text="Logout" onPress={onSignOutPressed} />
       </View>
     </>
   );
 };
-const UserDetailCard = () => {
+const UserDetailCard = props => {
   return (
     <View style={styles.card}>
-      <Text style={styles.cardHeader}>User Details</Text>
+      <Text style={styles.cardHeader}>User Email: {props.email}</Text>
     </View>
   );
 };
