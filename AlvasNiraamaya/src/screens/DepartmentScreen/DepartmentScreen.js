@@ -8,7 +8,7 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {CustomText} from '../../components';
+import {CustomText, DepartmentCard} from '../../components';
 import {COLORS} from '../../constants';
 
 const DATA = [
@@ -33,20 +33,13 @@ const DATA = [
   // Add more items as needed
 ];
 
-const ImageProfile = ({image, name, desc}) => {
+const Card = ({image, name, desc}) => {
   return (
-    <View style={styles.item}>
-      <View style={styles.profilePictureContainer}>
-        <Image style={styles.profilePicture} source={image} />
-      </View>
-      <View style={styles.detailcontainer}>
-        <CustomText style={styles.name}>{name}</CustomText>
-        <CustomText style={styles.name}>{desc}</CustomText>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Book</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <DepartmentCard
+      // imageSource={require('./images/example.jpg')}
+      title={name}
+      description={desc}
+    />
   );
 };
 
@@ -54,11 +47,11 @@ const DepartmentScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Doctors</Text>
+        <Text style={styles.headerText}>Department</Text>
       </View>
       <ScrollView style={styles.scrollView}>
         {DATA.map(item => (
-          <ImageProfile
+          <Card
             key={item.id}
             image={item.profilePicture}
             name={item.name}

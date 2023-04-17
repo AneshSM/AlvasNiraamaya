@@ -20,6 +20,7 @@ export {
   ColumnContainer,
   CustomText,
   ProfileCard,
+  DepartmentCard,
 } from './components';
 export {COLORS, IMGS, ROUTES} from './constants';
 export {SigninScreen_Style, bottomTabStyle} from './styles';
