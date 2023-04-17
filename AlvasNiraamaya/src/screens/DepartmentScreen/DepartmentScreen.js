@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   View,
@@ -8,54 +8,48 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {CustomText, DepartmentCard} from '../../components';
+import {DepartmentCard} from '../../components';
 import {COLORS} from '../../constants';
 
-const DATA = [
-  {
-    id: '1',
-    // profilePicture: require('./images/profile1.jpg'),
-    name: 'Item 1',
-    desc: 'desc',
-  },
-  {
-    id: '2',
-    // profilePicture: require('./images/profile2.jpg'),
-    name: 'Item 2',
-    desc: 'desc',
-  },
-  {
-    id: '3',
-    // profilePicture: require('./images/profile3.jpg'),
-    name: 'Item 3',
-    desc: 'desc',
-  },
-  // Add more items as needed
-];
-
-const Card = ({image, name, desc}) => {
-  return (
-    <DepartmentCard
-      // imageSource={require('./images/example.jpg')}
-      title={name}
-      description={desc}
-    />
-  );
-};
+import firestore from '@react-native-firebase/firestore';
 
 const DepartmentScreen = () => {
+  const [department, setDepartment] = useState([]);
+
+  useEffect(() => {
+    const fetchDepartment = async () => {
+      try {
+        const deptList = [];
+        await firestore()
+          .collection('Department')
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              const {DeptName, Desc, Description, Doctor} = doc.data();
+              deptList.push({id: doc.id, DeptName, Desc, Description, Doctor});
+            });
+          });
+        setDepartment(deptList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDepartment();
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Department</Text>
       </View>
       <ScrollView style={styles.scrollView}>
-        {DATA.map(item => (
-          <Card
+        {department.map(item => (
+          <DepartmentCard
             key={item.id}
-            image={item.profilePicture}
-            name={item.name}
-            desc={item.desc}
+            title={item.DeptName}
+            description={item.Desc}
+            info={item.Description}
+            doctor={item.Doctor}
           />
         ))}
       </ScrollView>

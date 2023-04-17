@@ -26,6 +26,8 @@ export default {
   PRODUCT: 'Product',
   PRODUCT_DRAWER: 'Product Drawer',
 
+  INFORMATION: 'Information',
+
   APPOINTMENT: 'Appointment',
   APPOINTMENT_DRAWER: 'Appointment Drawer',
 

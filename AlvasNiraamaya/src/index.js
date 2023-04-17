@@ -10,6 +10,8 @@ export {
   ProfileScreen,
   DepartmentScreen,
   DoctorScreenList,
+  BookingScreen,
+  InformationScreen,
 } from './screens';
 export {BottomTab, Navigation} from './global';
 export {

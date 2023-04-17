@@ -7,6 +7,7 @@ import {
   DeskTopScreen,
   DoctorScreenList,
   HomeScreen,
+  InformationScreen,
 } from '../../screens';
 import {ROUTES} from '../../constants';
 import BottomTab from './BottomTab';
@@ -18,6 +19,7 @@ const Navigation = () => {
       <Stack.Screen name={ROUTES.MAIN} component={BottomTab} />
       <Stack.Screen name={ROUTES.DEPARTMENT} component={DepartmentScreen} />
       <Stack.Screen name={ROUTES.DOCTOR} component={DoctorScreenList} />
+      <Stack.Screen name={ROUTES.INFORMATION} component={InformationScreen} />
     </Stack.Navigator>
   );
 };

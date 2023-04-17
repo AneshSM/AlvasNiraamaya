@@ -1,12 +1,28 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+import {CustomeButton} from '../CustomComponents';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTES} from '../../constants';
 
-const DepartmentCard = ({imageSource, title, description}) => {
+const DepartmentCard = ({imageSource, title, description, info, doctor}) => {
+  const navigation = useNavigation();
+  const navigate = () => {
+    navigation.navigate(ROUTES.INFORMATION, {
+      params: {title, info, doctor, imageSource},
+    });
+  };
+
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={imageSource} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
+      <CustomeButton
+        onPress={navigate}
+        factor={28}
+        text={'see more...'}
+        type="info"
+      />
     </View>
   );
 };

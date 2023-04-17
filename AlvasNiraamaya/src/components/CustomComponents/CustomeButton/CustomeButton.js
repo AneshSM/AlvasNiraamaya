@@ -54,6 +54,16 @@ const CustomeButton = ({
     text_main: {
       color: COLORS.clr10,
     },
+    container_info: {
+      padding: 0,
+      justifyContent: 'flex-end',
+    },
+    text_info: {
+      color: COLORS.clr10,
+    },
+    container_book: {
+      backgroundColor: COLORS.clr30,
+    },
   });
   return (
     <Pressable
