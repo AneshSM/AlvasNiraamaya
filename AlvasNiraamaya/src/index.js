@@ -1,10 +1,8 @@
 export {AppStack, AuthStack} from './stack';
 export {
-  ConfirmEmailScreen,
   DeskTopScreen,
   ForgotPassword,
   HomeScreen,
-  NewPasswordScreen,
   SigninScreen,
   SignupScreen,
   MapScreen,
@@ -18,7 +16,6 @@ export {
   CustomeButton,
   CustomeInput,
   SocialSignInButtons,
-  SocialSignUpButtons,
   CardComponent,
   ColumnContainer,
   CustomText,

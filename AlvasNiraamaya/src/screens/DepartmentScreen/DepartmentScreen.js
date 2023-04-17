@@ -1,61 +1,69 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {StyleSheet, View, ScrollView, Text, Image} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  Text,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
+import {CustomText} from '../../components';
 import {COLORS} from '../../constants';
 
 const DATA = [
   {
     id: '1',
-    // image: require('./images/image1.jpg'),
-    heading: 'Card 1 Heading',
-    description: 'Card 1 Description',
+    // profilePicture: require('./images/profile1.jpg'),
+    name: 'Item 1',
+    desc: 'desc',
   },
   {
     id: '2',
-    // image: require('./images/image2.jpg'),
-    heading: 'Card 2 Heading',
-    description: 'Card 2 Description',
+    // profilePicture: require('./images/profile2.jpg'),
+    name: 'Item 2',
+    desc: 'desc',
   },
   {
     id: '3',
-    // image: require('./images/image3.jpg'),
-    heading: 'Card 3 Heading',
-    description: 'Card 3 Description',
+    // profilePicture: require('./images/profile3.jpg'),
+    name: 'Item 3',
+    desc: 'desc',
   },
-  {
-    id: '3',
-    // image: require('./images/image3.jpg'),
-    heading: 'Card 3 Heading',
-    description: 'Card 3 Description',
-  },
-  {
-    id: '3',
-    // image: require('./images/image3.jpg'),
-    heading: 'Card 3 Heading',
-    description: 'Card 3 Description',
-  },
-  {
-    id: '3',
-    // image: require('./images/image3.jpg'),
-    heading: 'Card 3 Heading',
-    description: 'Card 3 Description',
-  },
-  // Add more cards as needed
+  // Add more items as needed
 ];
+
+const ImageProfile = ({image, name, desc}) => {
+  return (
+    <View style={styles.item}>
+      <View style={styles.profilePictureContainer}>
+        <Image style={styles.profilePicture} source={image} />
+      </View>
+      <View style={styles.detailcontainer}>
+        <CustomText style={styles.name}>{name}</CustomText>
+        <CustomText style={styles.name}>{desc}</CustomText>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Book</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 const DepartmentScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Main Header</Text>
+        <Text style={styles.headerText}>Doctors</Text>
       </View>
       <ScrollView style={styles.scrollView}>
         {DATA.map(item => (
-          <View style={styles.card} key={item.id}>
-            <Image style={styles.image} source={null} />
-            <Text style={styles.heading}>{item.heading}</Text>
-            <Text style={styles.description}>{item.description}</Text>
-          </View>
+          <ImageProfile
+            key={item.id}
+            image={item.profilePicture}
+            name={item.name}
+            desc={item.desc}
+          />
         ))}
       </ScrollView>
     </View>
@@ -80,7 +88,8 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  card: {
+  item: {
+    height: 200,
     margin: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -92,21 +101,46 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
   },
-  image: {
-    height: 200,
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+  profilePictureContainer: {
+    height: 140,
+    width: 140,
+    borderRadius: 100,
+    overflow: 'hidden',
+    margin: 20,
+    borderWidth: 1,
   },
-  heading: {
+  profilePicture: {
+    height: '100%',
+    width: '100%',
+  },
+  detailcontainer: {
+    flex: 1,
+    marginHorizontal: 20,
+    height: '100%',
+    flexDirection: 'column',
+    justifyContent: 'space-evenly',
+  },
+  name: {
     fontSize: 18,
     fontWeight: 'bold',
-    margin: 10,
   },
-  description: {
-    fontSize: 14,
-    marginHorizontal: 10,
-    marginBottom: 20,
+  button: {
+    backgroundColor: COLORS.clr30,
+    padding: 10,
+    borderRadius: 5,
+    alignSelf: 'flex-end',
+    width: '100%',
+    textAlign: 'center',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 

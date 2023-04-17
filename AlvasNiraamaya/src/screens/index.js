@@ -1,8 +1,6 @@
-export {default as ConfirmEmailScreen} from './ConfirmEmailScreen';
 export {default as DeskTopScreen} from './DeskTopScreen';
 export {default as ForgotPassword} from './ForgotPassword';
 export {default as HomeScreen} from './HomeScreen';
-export {default as NewPasswordScreen} from './NewPasswordScreen';
 export {default as SigninScreen} from './SigninScreen';
 export {default as SignupScreen} from './SignupScreen';
 export {default as AppointmentScreen} from './AppointmentScreen';

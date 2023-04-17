@@ -15,8 +15,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const ColumnContainer = ({children}) => {
-  return <View style={[styles.container, {height: height}]}>{children}</View>;
+const ColumnContainer = props => {
+  return (
+    <View style={[styles.container, {height: height}, props.style]}>
+      {props.children}
+    </View>
+  );
 };
 
 export default ColumnContainer;

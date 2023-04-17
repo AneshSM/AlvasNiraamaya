@@ -1,14 +1,11 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import {DeskTopScreen} from '../../screens';
+import {Navigation} from '../../global';
 
 const Stack = createStackNavigator();
 
 const AppStack = () => {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="DeskTop" component={DeskTopScreen} />
-    </Stack.Navigator>
-  );
+  return <Navigation />;
 };
 
 export default AppStack;

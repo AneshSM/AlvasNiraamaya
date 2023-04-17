@@ -1,10 +1,23 @@
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useContext} from 'react';
 import {CustomeButton} from '../../CustomComponents';
 
+//flash message
+import FlashMessage, {showMessage} from 'react-native-flash-message';
+
+// context
+import {AuthContext} from '../../../context/AuthProvider';
+
 const SocialSignInButtons = () => {
+  const {googleSignIn} = useContext(AuthContext);
   const onSignInGoogle = () => {
-    console.warn('Google');
+    googleSignIn();
+    showMessage({
+      message: 'SignedIn succesfully',
+      description: "Welcome to Alva's Niraamaya Application",
+      type: 'success',
+      icon: 'auto',
+    });
   };
   const onSignInFaceBook = () => {
     console.warn('FaceBook');
@@ -22,12 +35,12 @@ const SocialSignInButtons = () => {
             bgColor="#FFFFFF"
             fgColor="#757575"
           />
-          <CustomeButton
+          {/* <CustomeButton
             text="Sign In with FaceBook"
             onPress={onSignInFaceBook}
             bgColor="#1877F2"
             fgColor="#FFFFFF"
-          />
+          /> */}
         </>
       ) : (
         <CustomeButton

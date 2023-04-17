@@ -1,24 +1,25 @@
 import {View, Text, StyleSheet} from 'react-native';
 import React, {useContext} from 'react';
 
-import {useNavigation} from '@react-navigation/native';
-import {firebase} from '@react-native-firebase/auth';
-import auth from '@react-native-firebase/auth';
-
-import {CustomText, CustomeButton, ProfileCard} from '../../components';
+import {CustomeButton, ProfileCard} from '../../components';
 import {AuthContext} from '../../context/AuthProvider';
+//flash message
+import {showMessage} from 'react-native-flash-message';
 
 const ProfileScreen = () => {
   const {user, signout} = useContext(AuthContext);
   const onSignOutPressed = () => {
-    signout();
+    signout().then(
+      showMessage({
+        message: 'SignedOut succesfully',
+        description: 'Thank you',
+        type: 'success',
+        icon: 'auto',
+      }),
+    );
   };
 
   return (
-    // <View>
-    //   <CustomText>{user != null && 'User email: ' + user.email}</CustomText>
-    //   <CustomeButton text="Logout" onPress={onSignOutPressed} />
-    // </View>
     <>
       <View style={styles.container}>
         <ProfileCard />

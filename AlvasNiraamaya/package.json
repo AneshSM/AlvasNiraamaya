@@ -25,6 +25,7 @@
     "react-hooks": "^1.0.1",
     "react-native": "0.71.5",
     "react-native-calendars": "^1.1294.0",
+    "react-native-flash-message": "^0.4.1",
     "react-native-gesture-handler": "^2.9.0",
     "react-native-maps": "^1.4.0",
     "react-native-pager-view": "^6.2.0",

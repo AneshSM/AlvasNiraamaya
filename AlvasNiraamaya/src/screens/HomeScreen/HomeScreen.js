@@ -1,47 +1,79 @@
-import {View, StyleSheet, Text, ImageBackground} from 'react-native';
-import React, {useContext} from 'react';
-import {CardComponent} from '../../components';
-import bgIMG from '../../assets/niramaya.png';
-import {AuthContext} from '../../context/AuthProvider';
+import {View, StyleSheet, ImageBackground} from 'react-native';
+import React from 'react';
+import {ColumnContainer, CustomText, CustomeButton} from '../../components';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTES} from '../../constants';
 
 const HomeScreen = () => {
-  const {user} = useContext(AuthContext);
+  const navigation = useNavigation();
 
   return (
-    <View style={homeStyle.root}>
-      <ImageBackground
-        source={bgIMG}
-        resizeMode="cover"
-        style={homeStyle.bgImg}>
-        <CardComponent>
-          <Text style={homeStyle.fontStyles}>{user.email}</Text>
-        </CardComponent>
-        <CardComponent>
-          <Text style={homeStyle.fontStyles}>Doctors</Text>
-        </CardComponent>
-        <CardComponent>
-          <Text style={homeStyle.fontStyles}>Products</Text>
-        </CardComponent>
-      </ImageBackground>
-    </View>
+    <ColumnContainer style={homeStyle.container}>
+      <View style={homeStyle.container}>
+        <ImageBackground
+          source={require('../../assets/main_background.jpg')}
+          style={homeStyle.backgroundImage}>
+          <CustomText style={homeStyle.title}>Hospital App</CustomText>
+          <CustomeButton
+            type="main"
+            style={homeStyle.button}
+            onPress={() => navigation.navigate(ROUTES.APPOINTMENT)}
+            text={'Appointments'}
+          />
+          <CustomeButton
+            type="main"
+            style={homeStyle.button}
+            onPress={() => navigation.navigate(ROUTES.DOCTOR)}
+            text={'Doctors'}
+          />
+          <CustomeButton
+            type="main"
+            style={homeStyle.button}
+            onPress={() => navigation.navigate(ROUTES.DEPARTMENT)}
+            text={'Departments'}
+          />
+          <CustomeButton
+            type="main"
+            style={homeStyle.button}
+            onPress={() => navigation.navigate(ROUTES.PRODUCT)}
+            text={'Products'}
+          />
+        </ImageBackground>
+      </View>
+    </ColumnContainer>
   );
 };
 
 export default HomeScreen;
 
 const homeStyle = StyleSheet.create({
-  root: {
-    borderWidth: 1,
-    flexGrow: 1,
-  },
-  bgImg: {
+  container: {
     flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 80,
+    width: '100%',
   },
-  fontStyles: {
-    fontSize: 20,
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 30,
+  },
+  title: {
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 50,
+  },
+  button: {
+    backgroundColor: '#fff',
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    marginTop: 20,
+  },
+  buttonText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#000',
   },
 });

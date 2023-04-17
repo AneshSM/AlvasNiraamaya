@@ -1,3 +1,4 @@
+import React from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 
 //Firebase Auth
@@ -10,7 +11,6 @@ import {AuthContext} from '../context/AuthProvider';
 
 const Router = () => {
   const {user, setUser} = useContext(AuthContext);
-  console.log(user);
   const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
@@ -27,7 +27,9 @@ const Router = () => {
     return subscriber; // unsubscribe on unmount
   }, [initializing, setUser]);
 
-  if (initializing) return null;
+  if (initializing) {
+    return null;
+  }
 
   return (
     <NavigationContainer>

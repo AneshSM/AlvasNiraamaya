@@ -1,31 +1,19 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-  ScrollView,
-} from 'react-native';
-import React, {useContext, useState} from 'react';
+import {StyleSheet, View, useWindowDimensions, ScrollView} from 'react-native';
+import React, {useState} from 'react';
 
 import auth from '@react-native-firebase/auth';
 
-import {
-  CustomText,
-  CustomeButton,
-  CustomeInput,
-  SocialSignInButtons,
-} from '../../components';
-import SocialSignUpButtons from '../../components/SocialButtons/SocialSignUpButtons/SocialSignUpButtons';
+import {CustomText, CustomeButton, CustomeInput} from '../../components';
 
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
+//flash message
+import {showMessage} from 'react-native-flash-message';
+// icon
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // constants
-import {COLORS} from '../../constants';
-
-// context
-import {AuthContext} from '../../context/AuthProvider';
+import {COLORS, ROUTES} from '../../constants';
 
 const SignupScreen = () => {
   const {height} = useWindowDimensions();
@@ -34,26 +22,55 @@ const SignupScreen = () => {
   const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
   const onSigInPressed = () => {
-    console.warn('SignIn');
     navigation.navigate('SignIn');
   };
 
-  const [alert, setAlert] = useState();
-  const [mailStatus, setMailStatus] = useState(false);
-
-  const showAlert = setTimeout(() => {
-    setMailStatus(false);
-    clearTimeout(showAlert);
-  }, 10000);
-
-  // Context
-  const {signup, signupError, singupMessage} = useContext(AuthContext);
-
-  const onSignUpPressed = data => {
-    signupError && setMailStatus(true) && setAlert(singupMessage);
+  const onSignUpPressed = async data => {
     const {Email, Password} = data;
     // Authentication
-    signup(Email, Password);
+    try {
+      await auth().createUserWithEmailAndPassword(Email, Password);
+      showMessage({
+        message: 'SignedUp succesfully',
+        description: 'Welcome to Alvas Niraamaya',
+        type: 'success',
+        icon: 'auto',
+      });
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        showMessage({
+          message: 'email-already-in-use',
+          description: 'That email address is already in use',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
+        console.log(error);
+      }
+      if (error.code === 'auth/invalid-email') {
+        showMessage({
+          message: 'invalid-email',
+          description: 'That email address is Invaild',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
+      }
+    }
   };
 
   const {
@@ -72,38 +89,6 @@ const SignupScreen = () => {
       </CustomText>
       <View style={[styles.container, {padding: height * 0.04}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <CustomeInput
-            placeholder="Username"
-            name="Username"
-            control={control}
-            rules={{
-              required: 'Username is required',
-              minLength: {
-                value: 4,
-                message: 'Username should be minimum 4 characters long',
-              },
-              maxLength: {
-                value: 20,
-                message: 'Username should be maximum 20 characters long',
-              },
-            }}
-          />
-          <CustomeInput
-            placeholder="Phone Number"
-            control={control}
-            name="Phone Number"
-            rules={{
-              required: 'Phone Number is required',
-              minLength: {
-                value: 10,
-                message: 'Phone Number should be minimum 10 characters long',
-              },
-              maxLength: {
-                value: 10,
-                message: 'Phone Number should be maximum 10 characters long',
-              },
-            }}
-          />
           <CustomeInput
             placeholder="Email"
             name="Email"
@@ -158,19 +143,11 @@ const SignupScreen = () => {
               Privacy and Policy
             </CustomText>
           </CustomText>
-          <SocialSignUpButtons />
           <CustomeButton
             text="Alreafy have an account ? Login"
             onPress={onSigInPressed}
             type="Tertiary"
           />
-          {mailStatus && (
-            <View style={styles.alert_container}>
-              <CustomText factor={30} style={styles.message}>
-                {alert}
-              </CustomText>
-            </View>
-          )}
         </ScrollView>
       </View>
     </View>

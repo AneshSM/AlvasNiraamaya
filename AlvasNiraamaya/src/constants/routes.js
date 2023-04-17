@@ -17,6 +17,15 @@ export default {
   HOME: 'Home',
   HOME_DRAWER: 'Home Drawer',
 
+  DEPARTMENT: 'Department',
+  DEPARTMENT_DRAWER: 'Department Drawer',
+
+  DOCTOR: 'Doctor',
+  DOCTOR_DRAWER: 'Doctor Drawer',
+
+  PRODUCT: 'Product',
+  PRODUCT_DRAWER: 'Product Drawer',
+
   APPOINTMENT: 'Appointment',
   APPOINTMENT_DRAWER: 'Appointment Drawer',
 

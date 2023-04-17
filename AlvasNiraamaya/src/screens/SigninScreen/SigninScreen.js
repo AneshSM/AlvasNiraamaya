@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React from 'react';
 
 // modules
 import {
@@ -11,6 +11,14 @@ import {
 } from 'react-native';
 import {useForm} from 'react-hook-form';
 import {useNavigation} from '@react-navigation/native';
+
+//flash message
+import {showMessage} from 'react-native-flash-message';
+
+// icon
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+// Firebase
 import auth from '@react-native-firebase/auth';
 
 // Components
@@ -27,7 +35,6 @@ import {COLORS, IMGS, ROUTES} from '../../constants';
 
 // styles
 import {SigninScreen_Style} from '../../styles';
-import {AuthContext} from '../../context/AuthProvider';
 
 const SigninScreen = () => {
   const {height, width} = useWindowDimensions();
@@ -39,28 +46,70 @@ const SigninScreen = () => {
   } = useForm();
 
   // console.log(errors);
+  const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
-  const [alert, setAlert] = useState();
-  const [mailStatus, setMailStatus] = useState(false);
-
-  const showAlert = setTimeout(() => {
-    setMailStatus(false);
-    clearTimeout(showAlert);
-  }, 10000);
-
-  const {signin, signinError, signinMessage} = useContext(AuthContext);
-
-  const onSiginPressed = data => {
+  const onSiginPressed = async data => {
     const {Email, Password} = data;
     // Authentication
     try {
-      signin(Email, Password);
+      await auth().signInWithEmailAndPassword(Email, Password);
+      showMessage({
+        message: 'SignedIn succesfully',
+        description: "Welcome to Alva's Niraamaya Application",
+        type: 'success',
+        icon: 'auto',
+      });
     } catch (error) {
-      if (error.message === 'auth/email-already-in-use') {
-        setMailStatus(true);
-        setAlert('That email address is already in use');
+      if (error.code === 'auth/user-not-found') {
+        showMessage({
+          message: 'user-not-found',
+          description: 'That email address is not registered!',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
       }
-      console.log('hi');
+      if (error.code === 'auth/wrong-password') {
+        showMessage({
+          message: 'wrong-password',
+          description: 'Please enter an valid password',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
+      }
+      if (error.code === 'auth/too-many-requests') {
+        showMessage({
+          message: 'too-many-requests',
+          description:
+            'We have blocked all requests from this device due to unusual activity. Try again later. [ Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. ',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
+      }
+      console.log(error);
     }
   };
 
@@ -70,7 +119,6 @@ const SigninScreen = () => {
   };
 
   const onSignUpPressed = () => {
-    console.warn('SignUp');
     navigation.navigate('SignUp');
   };
 
@@ -79,10 +127,16 @@ const SigninScreen = () => {
       <View style={styles.bottomCard}>
         <ScrollView>
           <CustomeInput
-            placeholder="Username"
+            placeholder="Email"
             name="Email"
             control={control}
-            rules={{required: 'Username is required'}}
+            rules={{
+              required: 'Email is required',
+              pattern: {
+                value: EMAIL_REGEX,
+                message: 'Enter valid Email id',
+              },
+            }}
           />
           <CustomeInput
             placeholder="Password"
@@ -109,13 +163,6 @@ const SigninScreen = () => {
             onPress={onSignUpPressed}
             type="Tertiary"
           />
-          {mailStatus && (
-            <View style={styles.alert_container}>
-              <CustomText factor={30} style={styles.message}>
-                {alert}
-              </CustomText>
-            </View>
-          )}
         </ScrollView>
       </View>
     );
@@ -153,10 +200,7 @@ const {width} = Dimensions.get('window');
 const CARD_WIDTH = width;
 const styles = StyleSheet.create({
   alert_container: {
-    width: '100%',
-    padding: 10,
     backgroundColor: COLORS.alert,
-    borderRadius: 10,
   },
   message: {
     color: COLORS.clr60,

@@ -11,6 +11,7 @@ import SplashScreen from 'react-native-splash-screen';
 
 import Router from './src/Router/Router';
 import {AuthProvider} from './src/context/AuthProvider';
+import FlashMessage from 'react-native-flash-message';
 
 function App() {
   useEffect(() => {
@@ -24,6 +25,7 @@ function App() {
   return (
     <AuthProvider>
       <SafeAreaView style={style.root}>
+        <FlashMessage duration={5000} />
         <Router />
       </SafeAreaView>
     </AuthProvider>

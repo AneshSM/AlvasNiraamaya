@@ -18,7 +18,8 @@ const CustomeButton = ({
         styles.container,
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor, borderWidth: 1} : {},
-      ]}>
+      ]}
+      name={text}>
       <CustomText
         factor={22}
         style={{
@@ -61,5 +62,13 @@ const styles = StyleSheet.create({
   },
   text_Secondary: {
     color: 'grey',
+  },
+  container_main: {
+    padding: 30,
+    backgroundColor: COLORS.bgclr,
+    borderWidth: 1,
+  },
+  text_main: {
+    color: COLORS.clr10,
   },
 });

@@ -3,30 +3,22 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {
-  BookingScreen,
-  ConfirmEmailScreen,
   DepartmentScreen,
   DeskTopScreen,
   DoctorScreenList,
-  ForgotPassword,
-  NewPasswordScreen,
-  SigninScreen,
-  SignupScreen,
+  HomeScreen,
 } from '../../screens';
+import {ROUTES} from '../../constants';
+import BottomTab from './BottomTab';
 
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="SignIn" component={SigninScreen} />
-        <Stack.Screen name="SignUp" component={SignupScreen} />
-        <Stack.Screen name="ConfirmEmail" component={ConfirmEmailScreen} />
-        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
-        <Stack.Screen name="NewPassword" component={NewPasswordScreen} />
-        <Stack.Screen name="DeskTop" component={DeskTopScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
+      <Stack.Screen name={ROUTES.MAIN} component={BottomTab} />
+      <Stack.Screen name={ROUTES.DEPARTMENT} component={DepartmentScreen} />
+      <Stack.Screen name={ROUTES.DOCTOR} component={DoctorScreenList} />
+    </Stack.Navigator>
   );
 };
 

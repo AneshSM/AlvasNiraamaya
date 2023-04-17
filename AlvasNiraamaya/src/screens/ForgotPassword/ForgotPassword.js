@@ -7,13 +7,23 @@ import {
   ScrollView,
 } from 'react-native';
 import React, {useState} from 'react';
+// firebase
+import auth from '@react-native-firebase/auth';
+
+//flash message
+import {showMessage} from 'react-native-flash-message';
+
+// icon
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {CustomText, CustomeButton, CustomeInput} from '../../components';
 
 import {useNavigation} from '@react-navigation/native';
 
 import {Controller, useForm} from 'react-hook-form';
-import {COLORS} from '../../constants';
+import {COLORS, ROUTES} from '../../constants';
+
+const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;
 
 const ForgotPassword = () => {
   const {height} = useWindowDimensions();
@@ -22,13 +32,38 @@ const ForgotPassword = () => {
   const navigation = useNavigation();
 
   const onSigInPressed = () => {
-    console.warn('SignIn');
     navigation.navigate('SignIn');
   };
 
-  const onSendPressed = () => {
-    console.warn('send');
-    navigation.navigate('NewPassword');
+  const onSendPressed = async data => {
+    try {
+      await auth().sendPasswordResetEmail(data.Email);
+      showMessage({
+        message: 'Reset Mail sent succesfully',
+        description: 'Check your mail and reset password through link',
+        type: 'success',
+        icon: 'auto',
+      });
+    } catch (error) {
+      if (error.code === 'auth/user-not-found') {
+        showMessage({
+          message: 'user-not-found',
+          description:
+            'There is no user record corresponding to this Email.\n Please cross check provided email',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
+      }
+      console.log(error);
+    }
   };
 
   const {
@@ -45,18 +80,14 @@ const ForgotPassword = () => {
       <View style={[styles.container, {padding: height * 0.04}]}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <CustomeInput
-            placeholder="Username"
+            placeholder="Email"
+            name="Email"
             control={control}
-            name="Username"
             rules={{
-              required: 'Username is required',
-              minLength: {
-                value: 4,
-                message: 'Username should be minimum 4 characters long',
-              },
-              maxLength: {
-                value: 20,
-                message: 'Username should be maximum 20 characters long',
+              required: 'Email is required',
+              pattern: {
+                value: EMAIL_REGEX,
+                message: 'Enter valid Email id',
               },
             }}
           />

@@ -1,6 +1,6 @@
 import {View, Text, ImageBackground} from 'react-native';
 import React from 'react';
-import {BottomTab} from '../../global/Navigation';
+import {BottomTab, Navigation} from '../../global/Navigation';
 
 const DeskTopScreen = () => {
   return (
