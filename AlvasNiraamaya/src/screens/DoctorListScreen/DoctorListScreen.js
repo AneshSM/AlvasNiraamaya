@@ -1,39 +1,15 @@
-/* eslint-disable prettier/prettier */
-import React from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  Image,
-  TouchableOpacity,
-} from 'react-native';
-import {CustomText} from '../../components';
-import {COLORS} from '../../constants';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, ScrollView, Text, Image} from 'react-native';
+import {CustomText, CustomeButton} from '../../components';
+import {COLORS, ROUTES} from '../../constants';
 
-const DATA = [
-  {
-    id: '1',
-    // profilePicture: require('./images/profile1.jpg'),
-    name: 'Item 1',
-    desc: 'desc',
-  },
-  {
-    id: '2',
-    // profilePicture: require('./images/profile2.jpg'),
-    name: 'Item 2',
-    desc: 'desc',
-  },
-  {
-    id: '3',
-    // profilePicture: require('./images/profile3.jpg'),
-    name: 'Item 3',
-    desc: 'desc',
-  },
-  // Add more items as needed
-];
+// firebase
+import firestore from '@react-native-firebase/firestore';
+import {useNavigation} from '@react-navigation/native';
 
-const ImageProfile = ({image, name, desc}) => {
+const ImageProfile = ({image, name, dept}) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.item}>
       <View style={styles.profilePictureContainer}>
@@ -41,28 +17,52 @@ const ImageProfile = ({image, name, desc}) => {
       </View>
       <View style={styles.detailcontainer}>
         <CustomText style={styles.name}>{name}</CustomText>
-        <CustomText style={styles.name}>{desc}</CustomText>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Book</Text>
-        </TouchableOpacity>
+        <CustomText style={styles.name}>{dept}</CustomText>
+        <CustomeButton
+          style={styles.button}
+          text={'Book'}
+          onPress={() => navigation.navigate(ROUTES.BOOKING)}
+        />
       </View>
     </View>
   );
 };
 
 const DoctorListScreen = () => {
+  const [doctors, setDoctors] = useState([]);
+
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      try {
+        const doctorList = [];
+        await firestore()
+          .collection('Doctor')
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              const {Department, DocName} = doc.data();
+              doctorList.push({id: doc.id, DocName, Department});
+            });
+          });
+        setDoctors(doctorList);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDoctor();
+  }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Doctors</Text>
       </View>
       <ScrollView style={styles.scrollView}>
-        {DATA.map(item => (
+        {doctors.map(item => (
           <ImageProfile
             key={item.id}
             image={item.profilePicture}
-            name={item.name}
-            desc={item.desc}
+            name={item.DocName}
+            dept={item.Department}
           />
         ))}
       </ScrollView>

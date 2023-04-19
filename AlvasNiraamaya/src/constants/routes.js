@@ -28,6 +28,8 @@ export default {
 
   INFORMATION: 'Information',
 
+  BOOKING: 'BookDoctor',
+
   APPOINTMENT: 'Appointment',
   APPOINTMENT_DRAWER: 'Appointment Drawer',
 

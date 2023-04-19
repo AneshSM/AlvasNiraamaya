@@ -1,4 +1,5 @@
-/* eslint-disable prettier/prettier */
+/* eslint-disable react/no-unstable-nested-components */
+import React from 'react';
 import {StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -23,7 +24,7 @@ function BottomTab() {
         tabBarActiveTintColor: COLORS.clr60,
         tabBarInactiveTintColor: COLORS.clr10,
         tabBarStyle: style.tab_container,
-        tabBarLabel: '',
+        tabBarLabelStyle: style.label,
         tabBarIcon: ({color, focused}) => {
           let iconName;
           if (route.name === ROUTES.HOME) {

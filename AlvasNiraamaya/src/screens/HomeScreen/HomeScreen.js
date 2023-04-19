@@ -14,7 +14,8 @@ const HomeScreen = () => {
       <View style={homeStyle.container}>
         <ImageBackground
           source={require('../../assets/main_background.jpg')}
-          style={homeStyle.backgroundImage}>
+          style={homeStyle.backgroundImage}
+          imageStyle={{opacity: 1}}>
           <View style={homeStyle.main}>
             <View style={homeStyle.header}>
               <CustomText factor={10} style={homeStyle.title}>

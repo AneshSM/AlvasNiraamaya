@@ -1,5 +1,8 @@
 /* eslint-disable prettier/prettier */
+import {Dimensions} from 'react-native';
+
 import {COLORS} from '../constants';
+const {width, height} = Dimensions.get('window');
 
 const bottomTabStyle = {
   tab_container: {
@@ -16,8 +19,10 @@ const bottomTabStyle = {
     justifyContent: 'space-evenly',
     elevation: 10,
   },
-  icon: {
-    paddingTop: 15,
+  label: {
+    marginTop: -20,
+    paddingBottom: 15,
+    fontSize: Math.min(width, height) / 38,
   },
 };
 export default bottomTabStyle;
