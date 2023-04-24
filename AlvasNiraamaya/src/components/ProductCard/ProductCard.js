@@ -1,28 +1,19 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import {CustomeButton} from '../CustomComponents';
-import {useNavigation} from '@react-navigation/native';
-import {ROUTES} from '../../constants';
+import CustomText from '../CustomText/CustomText';
+import {COLORS} from '../../constants';
 
-const DepartmentCard = ({imageURL, title, description, info, doctor}) => {
-  const navigation = useNavigation();
-  const navigate = () => {
-    navigation.navigate(ROUTES.INFORMATION, {
-      params: {title, info, doctor, imageURL},
-    });
-  };
+const ProductCard = ({imageURL, name, price}) => {
   console.log(imageURL);
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: imageURL}} />
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.description}>{description}</Text>
-      <CustomeButton
-        onPress={navigate}
-        factor={28}
-        text={'see more...'}
-        type="info"
-      />
+      <CustomText factor={20} style={styles.title}>
+        {name}
+      </CustomText>
+      <CustomText factor={20} style={styles.price}>
+        {price}
+      </CustomText>
     </View>
   );
 };
@@ -44,7 +35,7 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: 'cover',
     borderRadius: 10,
-    objectFit: 'contain',
+    objecFit: 'contain',
   },
   title: {
     fontSize: 24,
@@ -52,10 +43,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 5,
   },
-  description: {
-    fontSize: 16,
+  price: {
     marginBottom: 10,
+    textAlign: 'right',
+    color: COLORS.clr10,
+    fontWeight: 700,
   },
 });
 
-export default DepartmentCard;
+export default ProductCard;

@@ -6,9 +6,11 @@ import {
   DepartmentScreen,
   DoctorScreenList,
   InformationScreen,
+  ProductScreen,
 } from '../../screens';
 import {ROUTES} from '../../constants';
 import BottomTab from './BottomTab';
+import {UserForm} from '../../components';
 
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
@@ -17,8 +19,10 @@ const Navigation = () => {
       <Stack.Screen name={ROUTES.MAIN} component={BottomTab} />
       <Stack.Screen name={ROUTES.DEPARTMENT} component={DepartmentScreen} />
       <Stack.Screen name={ROUTES.DOCTOR} component={DoctorScreenList} />
+      <Stack.Screen name={ROUTES.PRODUCT} component={ProductScreen} />
       <Stack.Screen name={ROUTES.INFORMATION} component={InformationScreen} />
       <Stack.Screen name={ROUTES.BOOKING} component={BookingScreen} />
+      <Stack.Screen name={ROUTES.USER_FORM} component={UserForm} />
     </Stack.Navigator>
   );
 };

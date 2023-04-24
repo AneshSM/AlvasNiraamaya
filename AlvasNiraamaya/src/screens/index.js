@@ -10,3 +10,4 @@ export {default as DepartmentScreen} from './DepartmentScreen/DepartmentScreen';
 export {default as DoctorScreenList} from './DoctorListScreen/DoctorListScreen';
 export {default as BookingScreen} from './BookingScreen/BookingScreen';
 export {default as InformationScreen} from './InformationScreen/InformationScreen';
+export {default as ProductScreen} from './ProductScreen/ProductScreen';

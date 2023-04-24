@@ -36,6 +36,8 @@ export default {
   MAP: 'Map',
   MAP_DRAWER: 'Map Drawer',
 
+  USER_FORM: 'User Form',
+
   PROFILE: 'Profile',
   PROFILE_DRAWER: 'Profile Drawer',
 
