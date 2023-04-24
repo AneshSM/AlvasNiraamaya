@@ -118,3 +118,26 @@ const styles = StyleSheet.create({
 });
 
 export default ProfileScreen;
+
+// import React from 'react';
+// import {StyleSheet, View} from 'react-native';
+// import UserProfile from './UserProfile';
+// import BottomProfile from './BottomProfile';
+
+// const ProfileScreen = () => {
+//   return (
+//     <View style={styles.container}>
+//       <UserProfile />
+//       <BottomProfile />
+//     </View>
+//   );
+// };
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//   },
+// });
+
+// export default ProfileScreen;

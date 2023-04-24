@@ -4,17 +4,17 @@ import {CustomeButton} from '../CustomComponents';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../../constants';
 
-const DepartmentCard = ({imageSource, title, description, info, doctor}) => {
+const DepartmentCard = ({imageURL, title, description, info, doctor}) => {
   const navigation = useNavigation();
   const navigate = () => {
     navigation.navigate(ROUTES.INFORMATION, {
-      params: {title, info, doctor, imageSource},
+      params: {title, info, doctor, imageURL},
     });
   };
-
+  console.log(imageURL);
   return (
     <View style={styles.card}>
-      <Image style={styles.image} source={imageSource} />
+      <Image style={styles.image} source={{uri: imageURL}} />
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
       <CustomeButton
@@ -41,9 +41,10 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 250,
     resizeMode: 'cover',
     borderRadius: 10,
+    objecFit: 'contain',
   },
   title: {
     fontSize: 24,

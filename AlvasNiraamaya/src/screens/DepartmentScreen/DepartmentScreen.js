@@ -17,8 +17,15 @@ const DepartmentScreen = () => {
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-              const {DeptName, Desc, Description, Doctor} = doc.data();
-              deptList.push({id: doc.id, DeptName, Desc, Description, Doctor});
+              const {DeptName, Desc, Description, Doctor, Image} = doc.data();
+              deptList.push({
+                id: doc.id,
+                DeptName,
+                Desc,
+                Description,
+                Doctor,
+                Image,
+              });
             });
           });
         setDepartment(deptList);
@@ -42,6 +49,7 @@ const DepartmentScreen = () => {
             description={item.Desc}
             info={item.Description}
             doctor={item.Doctor}
+            imageURL={item.Image}
           />
         ))}
       </ScrollView>

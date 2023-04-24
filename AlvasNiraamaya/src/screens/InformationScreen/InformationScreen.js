@@ -5,11 +5,13 @@ import {ScrollView} from 'react-native-gesture-handler';
 import {COLORS} from '../../constants';
 
 const InformationScreen = ({route}) => {
-  console.log(route);
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Image style={styles.image} source={route.params.paramsimageSource} />
+        <Image
+          style={styles.image}
+          source={{uri: route.params.params.imageURL}}
+        />
         <CustomText factor={13} style={styles.title}>
           {route.params.params.title}
         </CustomText>

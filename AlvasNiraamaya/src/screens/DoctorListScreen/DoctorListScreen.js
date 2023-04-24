@@ -7,13 +7,13 @@ import {COLORS, ROUTES} from '../../constants';
 import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 
-const ImageProfile = ({image, name, dept}) => {
+const ImageProfile = ({image, name, dept, imageURL}) => {
   const navigation = useNavigation();
 
   return (
     <View style={styles.item}>
       <View style={styles.profilePictureContainer}>
-        <Image style={styles.profilePicture} source={image} />
+        <Image style={styles.profilePicture} source={{uri: imageURL}} />
       </View>
       <View style={styles.detailcontainer}>
         <CustomText style={styles.name}>{name}</CustomText>
@@ -21,7 +21,11 @@ const ImageProfile = ({image, name, dept}) => {
         <CustomeButton
           style={styles.button}
           text={'Book'}
-          onPress={() => navigation.navigate(ROUTES.BOOKING)}
+          onPress={() =>
+            navigation.navigate(ROUTES.BOOKING, {
+              params: {name, dept, imageURL},
+            })
+          }
         />
       </View>
     </View>
@@ -40,8 +44,8 @@ const DoctorListScreen = () => {
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-              const {Department, DocName} = doc.data();
-              doctorList.push({id: doc.id, DocName, Department});
+              const {Department, DocName, Image} = doc.data();
+              doctorList.push({id: doc.id, DocName, Department, Image});
             });
           });
         setDoctors(doctorList);
@@ -63,6 +67,7 @@ const DoctorListScreen = () => {
             image={item.profilePicture}
             name={item.DocName}
             dept={item.Department}
+            imageURL={item.Image}
           />
         ))}
       </ScrollView>
@@ -117,6 +122,7 @@ const styles = StyleSheet.create({
   profilePicture: {
     height: '100%',
     width: '100%',
+    objectFit: 'contain',
   },
   detailcontainer: {
     flex: 1,

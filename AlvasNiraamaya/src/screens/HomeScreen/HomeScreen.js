@@ -3,11 +3,22 @@ import React from 'react';
 import {ColumnContainer, CustomText, CustomeButton} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS, ROUTES} from '../../constants';
+import {useEffect} from 'react';
+
+import storage from '@react-native-firebase/storage';
 
 const {width, height} = Dimensions.get('window');
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  useEffect(() => {
+    let url;
+    const geturl = async () => {
+      url = await storage().ref('/Department/agnikarma.png').getDownloadURL();
+      console.log(url);
+    };
+    geturl();
+  }, []);
 
   return (
     <ColumnContainer style={homeStyle.container}>
