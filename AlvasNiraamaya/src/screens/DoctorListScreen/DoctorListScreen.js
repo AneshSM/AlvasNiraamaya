@@ -7,9 +7,13 @@ import {COLORS, ROUTES} from '../../constants';
 import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
 
-const ImageProfile = ({image, name, dept, imageURL}) => {
+const ImageProfile = ({name, dept, imageURL}) => {
   const navigation = useNavigation();
-
+  const navigate = () => {
+    navigation.navigate(ROUTES.BOOKING, {
+      params: {name, dept, imageURL},
+    });
+  };
   return (
     <View style={styles.item}>
       <View style={styles.profilePictureContainer}>
@@ -17,16 +21,10 @@ const ImageProfile = ({image, name, dept, imageURL}) => {
       </View>
       <View style={styles.detailcontainer}>
         <CustomText style={styles.name}>{name}</CustomText>
-        <CustomText style={styles.name}>{dept}</CustomText>
-        <CustomeButton
-          style={styles.button}
-          text={'Book'}
-          onPress={() =>
-            navigation.navigate(ROUTES.BOOKING, {
-              params: {name, dept, imageURL},
-            })
-          }
-        />
+        <CustomText factor={28} style={styles.name}>
+          Department: {dept}
+        </CustomText>
+        <CustomeButton style={styles.button} text={'Book'} onPress={navigate} />
       </View>
     </View>
   );
@@ -132,7 +130,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   name: {
-    fontSize: 18,
     fontWeight: 'bold',
   },
   button: {

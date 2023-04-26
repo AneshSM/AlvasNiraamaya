@@ -11,7 +11,6 @@ const DepartmentCard = ({imageURL, title, description, info, doctor}) => {
       params: {title, info, doctor, imageURL},
     });
   };
-  console.log(imageURL);
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: imageURL}} />

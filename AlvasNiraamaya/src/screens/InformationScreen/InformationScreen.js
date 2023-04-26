@@ -2,9 +2,11 @@ import React from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {CustomText, CustomeButton} from '../../components';
 import {ScrollView} from 'react-native-gesture-handler';
-import {COLORS} from '../../constants';
+import {COLORS, ROUTES} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
 
 const InformationScreen = ({route}) => {
+  const navigation = useNavigation();
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -21,7 +23,12 @@ const InformationScreen = ({route}) => {
         <CustomText style={styles.description}>
           {route.params.params.info}
         </CustomText>
-        <CustomeButton type="book" text={'Book Doctor'} />
+        <CustomeButton
+          type="book"
+          onPress={() => navigation.navigate(ROUTES.USER_FORM)}
+          text={'Book Appointment'}
+          factor={18}
+        />
       </View>
     </ScrollView>
   );

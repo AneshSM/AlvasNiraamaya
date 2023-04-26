@@ -4,7 +4,6 @@ import CustomText from '../CustomText/CustomText';
 import {COLORS} from '../../constants';
 
 const ProductCard = ({imageURL, name, price}) => {
-  console.log(imageURL);
   return (
     <View style={styles.card}>
       <Image style={styles.image} source={{uri: imageURL}} />
@@ -12,7 +11,7 @@ const ProductCard = ({imageURL, name, price}) => {
         {name}
       </CustomText>
       <CustomText factor={20} style={styles.price}>
-        {price}
+        &#x20b9; {price}
       </CustomText>
     </View>
   );

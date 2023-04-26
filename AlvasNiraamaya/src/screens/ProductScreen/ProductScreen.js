@@ -27,7 +27,6 @@ const ProductScreen = () => {
             });
           });
         setProduct(productList);
-        console.log(productList);
       } catch (error) {
         console.log(error);
       }

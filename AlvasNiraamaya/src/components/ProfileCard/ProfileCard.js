@@ -3,6 +3,7 @@ import React from 'react';
 import {StyleSheet, Text, View, Dimensions, Image} from 'react-native';
 import {COLORS} from '../../constants';
 import CustomText from '../CustomText/CustomText';
+import {CustomeButton} from '../CustomComponents';
 
 const {width, height} = Dimensions.get('window');
 const imageSize = Math.min(width, height) / 4;
@@ -11,16 +12,22 @@ const ProfileCard = ({name, picture}) => {
   return (
     <View style={styles.container}>
       <View style={styles.profileContainer}>
-        <View
-          style={[
-            styles.imageContainer,
-            {width: imageSize, height: imageSize},
-          ]}>
-          <Image style={styles.image} source={{uri: null}} />
+        <View style={[styles.imageContainer]}>
+          <Image
+            style={styles.image}
+            source={require('../../assets/user/user-default.png')}
+          />
         </View>
-        <CustomText factor={16} style={styles.name}>
-          name
-        </CustomText>
+        <View style={{width: 300}}>
+          <CustomText factor={30} style={styles.name}>
+            edit Profile to enter the name
+          </CustomText>
+          <CustomeButton
+            type="Secondary"
+            style={{padding: 0}}
+            text={'Edit Profile'}
+          />
+        </View>
       </View>
     </View>
   );
@@ -49,13 +56,16 @@ const styles = StyleSheet.create({
     gap: width / 10,
   },
   imageContainer: {
+    width: 100,
+    height: 100,
     borderRadius: imageSize / 2,
     overflow: 'hidden',
-    borderWidth: 2,
+    borderWidth: 1,
   },
   image: {
     width: '100%',
     height: '100%',
+    objectFit: 'cover',
   },
   name: {
     fontSize: 24,

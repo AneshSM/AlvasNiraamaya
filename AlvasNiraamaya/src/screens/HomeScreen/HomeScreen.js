@@ -55,14 +55,6 @@ const HomeScreen = () => {
                 icon={{name: 'arrow-forward-ios', size: 30, color: 'black'}}
                 factor={18}
               />
-              <CustomeButton
-                type="main"
-                style={homeStyle.button}
-                onPress={() => navigation.navigate(ROUTES.USER_FORM)}
-                text={'User Form'}
-                icon={{name: 'arrow-forward-ios', size: 30, color: 'black'}}
-                factor={18}
-              />
             </View>
           </View>
         </ImageBackground>

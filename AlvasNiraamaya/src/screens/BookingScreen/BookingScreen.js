@@ -3,34 +3,39 @@ import React, {Component} from 'react';
 import {
   StyleSheet,
   View,
-  ScrollView,
   Text,
   Image,
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
 import {Calendar} from 'react-native-calendars';
-import {COLORS} from '../../constants';
+import {COLORS, ROUTES} from '../../constants';
+import {CustomeButton} from '../../components';
+import {useNavigation} from '@react-navigation/native';
 
-class DoctorProfile extends Component {
-  render() {
-    return (
-      <View style={styles.cardContainer}>
-        <View style={styles.doctorProfileContainer}>
-          <View style={styles.profilePictureContainer}>
-            <Image style={styles.doctorProfileImage} source={null} />
-          </View>
-          <View style={styles.doctorProfileInfo}>
-            <Text style={styles.doctorName}>Dr. John Doe</Text>
-            <TouchableOpacity style={styles.bookButton}>
-              <Text style={styles.bookButtonText}>Book</Text>
-            </TouchableOpacity>
-          </View>
+const DoctorProfile = ({route}) => {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.cardContainer}>
+      <View style={styles.doctorProfileContainer}>
+        <View style={styles.profilePictureContainer}>
+          <Image
+            style={styles.doctorProfileImage}
+            source={{uri: route.params.params.imageURL}}
+          />
+        </View>
+        <View style={styles.doctorProfileInfo}>
+          <Text style={styles.doctorName}>{route.params.params.name}</Text>
+          <CustomeButton
+            type="book"
+            onPress={() => navigation.navigate(ROUTES.USER_FORM)}
+            text={'Book'}
+          />
         </View>
       </View>
-    );
-  }
-}
+    </View>
+  );
+};
 
 class GoogleCalendar extends Component {
   render() {
@@ -83,17 +88,17 @@ class TimeSlots extends Component {
   }
 }
 
-export default class BookingScreen extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <DoctorProfile />
-        <GoogleCalendar />
-        <TimeSlots />
-      </View>
-    );
-  }
-}
+const BookingScreen = ({route}) => {
+  return (
+    <View style={styles.container}>
+      <DoctorProfile route={route} />
+      <GoogleCalendar />
+      <TimeSlots />
+    </View>
+  );
+};
+
+export default BookingScreen;
 
 const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
@@ -125,12 +130,13 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     margin: 20,
     borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   doctorProfileImage: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    borderWidth: 1,
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
   },
   doctorProfileInfo: {
     marginLeft: 20,
