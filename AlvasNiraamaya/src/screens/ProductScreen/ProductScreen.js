@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView, Text} from 'react-native';
-import {ProductCard} from '../../components';
 import {COLORS} from '../../constants';
 
 import firestore from '@react-native-firebase/firestore';
+import ProductCard from './ProductCard';
 
 const ProductScreen = () => {
   const [Product, setProduct] = useState([]);

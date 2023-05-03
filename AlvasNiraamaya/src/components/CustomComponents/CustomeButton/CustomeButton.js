@@ -13,6 +13,9 @@ const CustomeButton = ({
   brdr,
   icon,
   factor,
+  width,
+  style = null,
+  textStyle = null,
 }) => {
   const styles = StyleSheet.create({
     container: {
@@ -72,6 +75,7 @@ const CustomeButton = ({
         styles.container,
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor, borderWidth: 1} : {},
+        style,
       ]}
       name={text}>
       <CustomText
@@ -80,6 +84,7 @@ const CustomeButton = ({
           ...styles.text,
           ...styles[`text_${type}`],
           ...(fgColor ? {color: fgColor} : {}),
+          ...textStyle,
         }}>
         {text}
       </CustomText>

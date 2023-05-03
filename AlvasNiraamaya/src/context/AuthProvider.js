@@ -2,6 +2,7 @@ import React, {createContext, useState} from 'react';
 
 // Firebase
 import auth from '@react-native-firebase/auth';
+
 // Google auth
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 
@@ -9,10 +10,14 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null);
+  const [userform, setUserform] = useState(false);
+
   return (
     <AuthContext.Provider
       value={{
         user,
+        userform,
+        setUserform,
         setUser,
         signout: async () => {
           try {

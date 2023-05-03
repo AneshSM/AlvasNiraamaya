@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {StyleSheet, View, ScrollView, Text, Image} from 'react-native';
 import {CustomText, CustomeButton} from '../../components';
 import {COLORS, ROUTES} from '../../constants';
@@ -6,9 +6,12 @@ import {COLORS, ROUTES} from '../../constants';
 // firebase
 import firestore from '@react-native-firebase/firestore';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../../context/AuthProvider';
 
 const ImageProfile = ({name, dept, imageURL}) => {
   const navigation = useNavigation();
+  const {userform} = useContext(AuthContext);
+
   const navigate = () => {
     navigation.navigate(ROUTES.BOOKING, {
       params: {name, dept, imageURL},
@@ -24,7 +27,13 @@ const ImageProfile = ({name, dept, imageURL}) => {
         <CustomText factor={28} style={styles.name}>
           Department: {dept}
         </CustomText>
-        <CustomeButton style={styles.button} text={'Book'} onPress={navigate} />
+        <CustomeButton
+          style={styles.button}
+          text={'Book'}
+          onPress={
+            userform ? navigate : () => navigation.navigate(ROUTES.USER_FORM)
+          }
+        />
       </View>
     </View>
   );

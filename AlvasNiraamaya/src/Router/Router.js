@@ -30,7 +30,6 @@ const Router = () => {
   if (initializing) {
     return null;
   }
-
   return (
     <NavigationContainer>
       {user ? <AppStack /> : <AuthStack />}

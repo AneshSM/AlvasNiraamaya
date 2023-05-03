@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import {CustomeButton, CustomeInput} from '../CustomComponents';
-import {COLORS} from '../../constants';
+
 import {useForm} from 'react-hook-form';
 import {showMessage} from 'react-native-flash-message';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 
 import firestore from '@react-native-firebase/firestore';
+
+import {AuthContext} from '../../context/AuthProvider';
+import {CustomeButton, CustomeInput} from '../CustomComponents';
+import {COLORS} from '../../constants';
 
 const UserForm = () => {
   const {
@@ -16,76 +18,56 @@ const UserForm = () => {
     handleSubmit,
     formState: {errors},
   } = useForm();
-
+  const {user} = useContext(AuthContext);
   const navigation = useNavigation();
 
   const onConfirmPressed = async data => {
-    const {Name, Age, Gender, Mobile_Number, Occupation, Address} = data;
+    const {name, age, gender, mobileNo, occupation, address, image} = data;
     // Authentication
     try {
-      firestore().collection('Users').doc().add();
+      // firestore()
+      //   .collection('Users')
+      //   .doc(user.uid)
+      //   .add(
+      //     name,
+      //     age,
+      //     gender,
+      //     mobileNo,
+      //     occupation,
+      //     address,
+      //     image ? image : null,
+      //   );
       showMessage({
-        message: 'SignedIn succesfully',
-        description: "Welcome to Alva's Niraamaya Application",
+        message: 'Data added succesfully',
+        description: 'You can Edit data in your profile',
         type: 'success',
         icon: 'auto',
       });
+      navigation.goBack();
     } catch (error) {
-      if (error.code === 'auth/user-not-found') {
-        showMessage({
-          message: 'user-not-found',
-          description: 'That email address is not registered!',
-          type: 'warning',
-          icon: () => (
-            <Icon
-              name="warning"
-              size={30}
-              color="#aa2020"
-              style={{paddingRight: 20, paddingTop: 14}}
-            />
-          ),
-          position: 'bottom',
-        });
-      }
-      if (error.code === 'auth/wrong-password') {
-        showMessage({
-          message: 'wrong-password',
-          description: 'Please enter an valid password',
-          type: 'warning',
-          icon: () => (
-            <Icon
-              name="warning"
-              size={30}
-              color="#aa2020"
-              style={{paddingRight: 20, paddingTop: 14}}
-            />
-          ),
-          position: 'bottom',
-        });
-      }
-      if (error.code === 'auth/too-many-requests') {
-        showMessage({
-          message: 'too-many-requests',
-          description:
-            'We have blocked all requests from this device due to unusual activity. Try again later. [ Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later. ',
-          type: 'warning',
-          icon: () => (
-            <Icon
-              name="warning"
-              size={30}
-              color="#aa2020"
-              style={{paddingRight: 20, paddingTop: 14}}
-            />
-          ),
-          position: 'bottom',
-        });
-      }
       console.log(error);
     }
   };
   const onCancelPressed = () => {
     navigation.goBack();
   };
+  // const initializeUserData = () => {
+  //   firestore().collection('Users').doc(user.uid).set({
+  //     name: user.displayName,
+  //     age: 0,
+  //     eamil: user.email,
+  //     gender: '',
+  //     occupation: '',
+  //     mobileNo: user.phoneNumber,
+  //     image: user.photoURL,
+  //     address: '',
+  //   });
+  // };
+  // useEffect(() => {
+  //   initializeUserData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
+  // console.log(user);
 
   return (
     <View style={styles.bottomCard}>
@@ -130,6 +112,7 @@ const UserForm = () => {
           placeholder="Mobile Number"
           name="Mobile_Number"
           control={control}
+          keyboardType="phone-pad"
           rules={{
             required: 'Mobile Number is required',
             minLength: {
@@ -154,6 +137,8 @@ const UserForm = () => {
           placeholder="Address"
           name="Address"
           control={control}
+          numberOfLines={5}
+          multiline={true}
           rules={{
             required: 'Address is required',
             minLength: {

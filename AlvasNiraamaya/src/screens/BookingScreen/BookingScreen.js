@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import React, {Component} from 'react';
+import React, {Component, useContext} from 'react';
 import {
   StyleSheet,
   View,
@@ -12,25 +12,24 @@ import {Calendar} from 'react-native-calendars';
 import {COLORS, ROUTES} from '../../constants';
 import {CustomeButton} from '../../components';
 import {useNavigation} from '@react-navigation/native';
+import {AuthContext} from '../../context/AuthProvider';
 
 const DoctorProfile = ({route}) => {
+  const {user} = useContext(AuthContext);
   const navigation = useNavigation();
+  const routes = route.params.params;
   return (
     <View style={styles.cardContainer}>
       <View style={styles.doctorProfileContainer}>
         <View style={styles.profilePictureContainer}>
           <Image
             style={styles.doctorProfileImage}
-            source={{uri: route.params.params.imageURL}}
+            source={{uri: routes.imageURL}}
           />
         </View>
         <View style={styles.doctorProfileInfo}>
-          <Text style={styles.doctorName}>{route.params.params.name}</Text>
-          <CustomeButton
-            type="book"
-            onPress={() => navigation.navigate(ROUTES.USER_FORM)}
-            text={'Book'}
-          />
+          <Text style={styles.doctorName}>{routes.name}</Text>
+          <CustomeButton type="book" text={'Book'} />
         </View>
       </View>
     </View>

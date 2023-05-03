@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import CustomText from '../CustomText/CustomText';
+import CustomText from '../../components/CustomText/CustomText';
 import {COLORS} from '../../constants';
 
 const ProductCard = ({imageURL, name, price}) => {
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     height: 250,
     resizeMode: 'cover',
     borderRadius: 10,
-    objecFit: 'contain',
+    objectFit: 'contain',
   },
   title: {
     fontSize: 24,

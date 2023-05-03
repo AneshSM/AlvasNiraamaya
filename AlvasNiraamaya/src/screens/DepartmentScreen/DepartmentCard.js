@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
-import {CustomeButton} from '../CustomComponents';
+import {CustomeButton} from '../../components/CustomComponents';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../../constants';
 

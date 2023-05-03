@@ -7,25 +7,29 @@ import {useNavigation} from '@react-navigation/native';
 
 const InformationScreen = ({route}) => {
   const navigation = useNavigation();
+  const routes = route.params.params;
+  const name = routes.doctor;
+  const dept = routes.title;
+  const navigate = () => {
+    navigation.navigate(ROUTES.BOOKING, {
+      params: {name, dept},
+    });
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
-        <Image
-          style={styles.image}
-          source={{uri: route.params.params.imageURL}}
-        />
+        <Image style={styles.image} source={{uri: routes.imageURL}} />
         <CustomText factor={13} style={styles.title}>
-          {route.params.params.title}
+          {dept}
         </CustomText>
         <CustomText factor={18} style={styles.doctorName}>
-          Doctor: {route.params.params.doctor}
+          Doctor: {name}
         </CustomText>
-        <CustomText style={styles.description}>
-          {route.params.params.info}
-        </CustomText>
+        <CustomText style={styles.description}>{routes.info}</CustomText>
         <CustomeButton
           type="book"
-          onPress={() => navigation.navigate(ROUTES.USER_FORM)}
+          onPress={navigate}
           text={'Book Appointment'}
           factor={18}
         />

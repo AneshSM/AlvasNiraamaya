@@ -109,6 +109,23 @@ const SigninScreen = () => {
           position: 'bottom',
         });
       }
+      if (error.code === 'auth/network-request-failed') {
+        showMessage({
+          message: 'Server Error',
+          description:
+            'A network error (such as timeout, interrupted connection or unreachable host) has occurred.',
+          type: 'warning',
+          icon: () => (
+            <Icon
+              name="warning"
+              size={30}
+              color="#aa2020"
+              style={{paddingRight: 20, paddingTop: 14}}
+            />
+          ),
+          position: 'bottom',
+        });
+      }
       console.log(error);
     }
   };

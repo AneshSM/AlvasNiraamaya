@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView, Text} from 'react-native';
-import {DepartmentCard} from '../../components';
 import {COLORS} from '../../constants';
 
 import firestore from '@react-native-firebase/firestore';
+import DepartmentCard from './DepartmentCard';
 
 const DepartmentScreen = () => {
   const [department, setDepartment] = useState([]);

@@ -130,7 +130,9 @@ function CanceledAppointments() {
 
 const Tab = createMaterialTopTabNavigator();
 
-function AppointmentScreen() {
+function AppointmentScreen({route}) {
+  console.log(route);
+  const routes = route.params ? route.params.params : '';
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
@@ -139,6 +141,7 @@ function AppointmentScreen() {
         // tabBarInactiveTintColor: COLORS.clr10,
         tabBarStyle: styles.tab_container,
         tabBarLabelStyle: styles.tab_text,
+        tabBarPressOpacity: 0.5,
       })}>
       <Tab.Screen name="Active" component={ActiveAppointments} />
       <Tab.Screen name="Past" component={PastAppointments} />

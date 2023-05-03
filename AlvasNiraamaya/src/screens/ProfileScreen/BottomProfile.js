@@ -1,24 +1,63 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {CustomeButton} from '../../components';
+import {showMessage} from 'react-native-flash-message';
+import {AuthContext} from '../../context/AuthProvider';
+import {COLORS, ROUTES} from '../../constants';
+import {useNavigation} from '@react-navigation/native';
 
 const BottomProfile = () => {
+  const {signout} = useContext(AuthContext);
+  const navigation = useNavigation();
+  const navigate = route => {
+    navigation.navigate(ROUTES.INFORMATION, {
+      params: {route},
+    });
+  };
+  const onSignOutPressed = () => {
+    signout().then(
+      showMessage({
+        message: 'SignedOut succesfully',
+        description: 'Thank you',
+        type: 'success',
+        icon: 'auto',
+      }),
+    );
+  };
   return (
     <View style={styles.bottomCard}>
-      <TouchableOpacity style={styles.bottomButton}>
-        <Text style={styles.buttonText}>Appointment History</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.bottomButton}>
-        <Text style={styles.buttonText}>Booked Appointments</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.bottomButton}>
-        <Text style={styles.buttonText}>Customer Care</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.bottomButton}>
-        <Text style={styles.buttonText}>Rate Us</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.logoutButton}>
-        <Text style={styles.logoutButtonText}>Logout</Text>
-      </TouchableOpacity>
+      <CustomeButton
+        style={styles.bottomButton}
+        textStyle={styles.buttonText}
+        text={'Appointment History'}
+      />
+      <CustomeButton
+        style={styles.bottomButton}
+        textStyle={styles.buttonText}
+        text={'Booked Appointments'}
+      />
+      <CustomeButton
+        style={styles.bottomButton}
+        textStyle={styles.buttonText}
+        text={'Customer Care'}
+      />
+      <View style={styles.card}>
+        <Text style={styles.cardHeader}>Help Us Improve</Text>
+        <Text style={styles.helpText}>
+          If you have any feedback or suggestions on how we can improve our
+          services, please let us know.
+        </Text>
+        <CustomeButton
+          style={{...styles.bottomButton, elevation: 0, borderWidth: 1}}
+          textStyle={styles.buttonText}
+          text={'Rate Us'}
+        />
+      </View>
+      <CustomeButton
+        style={styles.logoutButton}
+        onPress={onSignOutPressed}
+        text="Logout"
+      />
     </View>
   );
 };
@@ -29,6 +68,24 @@ const styles = StyleSheet.create({
     padding: 20,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
+    flex: 1,
+    justifyContent: 'space-evenly',
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 8,
+    padding: 16,
+    marginBottom: 16,
+  },
+  cardHeader: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333333',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  helpText: {
+    fontSize: 16,
   },
   bottomButton: {
     backgroundColor: '#fff',
@@ -41,9 +98,10 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: COLORS.clr10,
   },
   logoutButton: {
-    backgroundColor: '#3f51b5',
+    backgroundColor: '#e74c3c',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -51,7 +109,7 @@ const styles = StyleSheet.create({
   },
   logoutButtonText: {
     color: '#fff',
-    fontSize: '20px',
+    fontSize: 20,
   },
 });
 

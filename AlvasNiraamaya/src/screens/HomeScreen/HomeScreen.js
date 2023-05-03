@@ -1,14 +1,18 @@
 import {View, StyleSheet, ImageBackground, Dimensions} from 'react-native';
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 import {ColumnContainer, CustomText, CustomeButton} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {COLORS, ROUTES} from '../../constants';
+import {AuthContext} from '../../context/AuthProvider';
 
 const {width, height} = Dimensions.get('window');
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-
   return (
     <ColumnContainer style={homeStyle.container}>
       <View style={homeStyle.container}>
@@ -92,9 +96,9 @@ const homeStyle = StyleSheet.create({
   button: {
     backgroundColor: '#fff',
     borderRadius: 10,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
     marginTop: 20,
+    elevation: 10,
+    borderWidth: 0,
   },
   buttonText: {
     fontSize: 18,

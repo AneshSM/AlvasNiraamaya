@@ -2,6 +2,7 @@ import {StyleSheet, View, useWindowDimensions, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import {CustomText, CustomeButton, CustomeInput} from '../../components';
 
@@ -16,6 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {COLORS, ROUTES} from '../../constants';
 
 const SignupScreen = () => {
+  const [doc, setdoc] = useState('');
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
 
@@ -29,13 +31,16 @@ const SignupScreen = () => {
     const {Email, Password} = data;
     // Authentication
     try {
-      await auth().createUserWithEmailAndPassword(Email, Password);
-      showMessage({
-        message: 'SignedUp succesfully',
-        description: 'Welcome to Alvas Niraamaya',
-        type: 'success',
-        icon: 'auto',
-      });
+      await auth()
+        .createUserWithEmailAndPassword(Email, Password)
+        .then(
+          showMessage({
+            message: 'SignedUp succesfully',
+            description: 'Welcome to Alvas Niraamaya',
+            type: 'success',
+            icon: 'auto',
+          }),
+        );
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
         showMessage({
@@ -144,7 +149,7 @@ const SignupScreen = () => {
             </CustomText>
           </CustomText>
           <CustomeButton
-            text="Alreafy have an account ? Login"
+            text="Already have an account ? Login"
             onPress={onSigInPressed}
             type="Tertiary"
           />

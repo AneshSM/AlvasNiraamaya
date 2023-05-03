@@ -1,18 +1,28 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {CustomText, CustomeButton} from '../../components';
+import {useNavigation} from '@react-navigation/native';
+import {ROUTES} from '../../constants';
 
-const UserProfile = () => {
+const UserProfile = ({name, image}) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.topCard}>
       <View style={styles.userProfile}>
         <Image
-          source={{uri: 'https://i.pravatar.cc/300'}}
+          source={{uri: image ? image : 'https://i.pravatar.cc'}}
           style={styles.avatar}
         />
-        <Text style={styles.username}>John Doe</Text>
-        <TouchableOpacity style={styles.editButton}>
-          <Text style={styles.editButtonText}>Edit</Text>
-        </TouchableOpacity>
+        <CustomText style={styles.username}>
+          {name ? name : 'no name'}
+        </CustomText>
+        <CustomeButton
+          factor={25}
+          onPress={() => navigation.navigate(ROUTES.USER_FORM)}
+          style={styles.editButton}
+          text="Edit"
+        />
       </View>
     </View>
   );
@@ -29,6 +39,7 @@ const styles = StyleSheet.create({
   userProfile: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
   avatar: {
     width: 80,
@@ -42,9 +53,10 @@ const styles = StyleSheet.create({
   },
   editButton: {
     backgroundColor: '#3f51b5',
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
     marginLeft: 'auto',
+    width: '30%',
   },
   editButtonText: {
     color: '#fff',
