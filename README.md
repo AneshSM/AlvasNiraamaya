@@ -4,9 +4,12 @@ AlvasNiraamaya is a React Native mobile application for an ayurvedic hospital. I
 
 ## Installation
 
-Before running the app, you need to have Node.js and npm installed on your computer. You also need to have the Expo CLI installed globally. If you don't have them installed, you can follow the instructions on the Node.js and Expo websites to download and install them.
+To install and use React Native application, follow these steps:
 
-To install the app, clone the repository and install the dependencies:
+1. Install Node.js
+React Native requires Node.js and the npm package manager. You can download and install Node.js from the official website: https://nodejs.org/en/
+
+2. To install the Niraamaya app, clone the repository and install the dependencies:
 
 ```bash
 
@@ -18,37 +21,59 @@ npm install
 
 ```
 
-Once the dependencies are installed, you can run the app:
-
-```bash
-
-npm start
-
-```
-
-This will start the Expo development server, which you can use to run the app on an iOS or Android emulator or a physical device.
+This will create a new project folder called "AlvasNiraamaya" with the all files and folder structure required for a React Native Niraamaya app.
 
 ## Usage
+1. Start Metro development server 
+```
+npx react-native start
+```
+This will start the server in a new terminal window. Keep this window open while you're developing your app, as the server needs to be running in order to serve the app's code to the device or simulator.
 
-When you run `npm start`, the Expo development server will open in your default web browser. From there, you can select how you want to run the app, either on an emulator or a physical device.
+If you're running the app on an Android device or emulator, you may also need to start the ADB server by running the following command in a separate terminal window:
+```
+adb start-server
+```
+This will start the ADB server, which is used to communicate with Android devices and emulators. Make sure the device or emulator is connected and visible to ADB before running the app.
 
-If you want to run the app on a physical device, you need to install the Expo app on the device and scan the QR code displayed in the Expo development server.
+2. Run the app on a device or simulator
+To run the app on an iOS simulator, run the following command from the project folder:
 
-Once the app is running, you can use it to book appointments, receive reminders, and access information about the hospital and its services.
+```
+react-native run-ios
+```
+
+To run the app on an Android emulator or device, run the following command:
+
+```
+react-native run-android
+```
+
+This will build and launch the app on the selected device or simulator.
+
+3. Make changes to the app
+Open the project folder in your favorite code editor and start making changes to the files in the "src" folder. You can also add new files and components as needed.
+
+4. Test the app
+After making changes to the app, you can test it by reloading the app on the device or simulator. To reload the app, press "Ctrl+R" on the simulator or shake your device and select "Reload" from the menu.
+
+That's it! You now have a React Native Niraamaya app up and running. From here, you can continue to develop app by adding more functionality, styling the app, and testing on different devices and platforms.
+
+Before running the app, you need to have Node.js and npm installed on your computer. You also need to have the React CLI installed globally. If you don't have them installed, you can follow the instructions on the Node.js and React native websites to download and install them.
 
 ## Folder Structure
 
 The project is organized into the following folders:
 
-- `assets`: Contains the images and other assets used by the app.
+- `src>assets`: Contains the images and other assets used by the app.
 
-- `components`: Contains the reusable UI components used by the app.
+- `src>components`: Contains the reusable UI components used by the app.
 
-- `navigation`: Contains the navigation configuration and screens used by the app.
+- `src>global>Navigation`: Contains the navigation configuration and screens used by the app.
 
-- `screens`: Contains the individual screens used by the app.
+- `src>screens`: Contains the individual screens used by the app.
 
-- `services`: Contains the services used by the app, such as the API service and the notification service.
+- `src>context`: Contains the all application context files that are used across multiple pages.
 
 ## Contributers
 - `@ksheerashetty`: ksheerashetty@gmail.com 
