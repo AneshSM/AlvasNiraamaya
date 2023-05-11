@@ -1,7 +1,5 @@
 # AlvasNiraamaya
 Major Project:
-
-
 AlvasNiraamaya is a React Native mobile application for an ayurvedic hospital. It is designed to help patients book appointments, receive reminders, and access information about the hospital and its services.
 
 ## Installation
@@ -52,24 +50,19 @@ The project is organized into the following folders:
 
 - `services`: Contains the services used by the app, such as the API service and the notification service.
 
-## Contributing
-
-If you want to contribute to the project, you can fork the repository, make your changes, and submit a pull request. Before submitting a pull request, please make sure that your changes are well-tested and that they follow the coding conventions used in the project.
-
-## License
-
-The AlvasNiraamaya project is licensed under the MIT License. See the `LICENSE` file for more information.
+## Contributers
+- `@ksheerashetty`: ksheerashetty@gmail.com 
+- `Saqibrz`: muhammad24saqib@gmail.com
+- `ganavi882`: ganavi921@gmail.com
 
 ## Contact Information
 
-If you have any questions or comments about the project, you can contact the project maintainer at anesh.s.m1999@gmail.com.
+If you have any questions or comments about the project, you can contact the project maintainer at aneshsm204@gmail.com.
 
 ## Links
 
 - [AlvasNiraamaya Repository](https://github.com/AneshSM/AlvasNiraamaya)
 
-- [Expo CLI](https://docs.expo.dev/workflow/expo-cli/) 
+- [React Native CLI](https://reactnative.dev/docs/environment-setup) 
 
 - [Node.js](https://nodejs.org/en/) 
-
-- [MIT License](https://opensource.org/licenses/MIT)
