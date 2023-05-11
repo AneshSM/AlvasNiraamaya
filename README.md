@@ -51,9 +51,9 @@ The project is organized into the following folders:
 - `services`: Contains the services used by the app, such as the API service and the notification service.
 
 ## Contributers
--`ksheerashetty`: ksheerashetty@gmail.com 
--`Saqibrz`: muhammad24saqib@gmail.com
--`ganavi882`: ganavi921@gmail.com
+- `ksheerashetty`: ksheerashetty@gmail.com 
+- `Saqibrz`: muhammad24saqib@gmail.com
+- `ganavi882`: ganavi921@gmail.com
 
 ## Contact Information
 
