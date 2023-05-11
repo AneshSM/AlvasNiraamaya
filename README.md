@@ -76,7 +76,7 @@ The project is organized into the following folders:
 - `src>context`: Contains the all application context files that are used across multiple pages.
 
 ## Contributers
-- `@ksheerashetty`: ksheerashetty@gmail.com 
+- `ksheerashetty`: ksheerashetty@gmail.com 
 - `Saqibrz`: muhammad24saqib@gmail.com
 - `ganavi882`: ganavi921@gmail.com
 
