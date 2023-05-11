@@ -16,6 +16,8 @@ const CustomeButton = ({
   width,
   style = null,
   textStyle = null,
+  disabled = false,
+  children,
 }) => {
   const styles = StyleSheet.create({
     container: {
@@ -77,17 +79,21 @@ const CustomeButton = ({
         bgColor ? {backgroundColor: bgColor, borderWidth: 1} : {},
         style,
       ]}
-      name={text}>
-      <CustomText
-        factor={factor ? factor : 22}
-        style={{
-          ...styles.text,
-          ...styles[`text_${type}`],
-          ...(fgColor ? {color: fgColor} : {}),
-          ...textStyle,
-        }}>
-        {text}
-      </CustomText>
+      name={text}
+      disabled={disabled}>
+      {text && (
+        <CustomText
+          factor={factor ? factor : 22}
+          style={{
+            ...styles.text,
+            ...styles[`text_${type}`],
+            ...(fgColor ? {color: fgColor} : {}),
+            ...textStyle,
+          }}>
+          {text}
+        </CustomText>
+      )}
+      {children && children}
       {icon && <Icon name={icon.name} size={icon.size} color={icon.color} />}
     </Pressable>
   );

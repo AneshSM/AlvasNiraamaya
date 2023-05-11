@@ -1,5 +1,11 @@
 /* eslint-disable prettier/prettier */
-import React, {Component, useContext} from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+  useCallback,
+} from 'react';
 import {
   StyleSheet,
   View,
@@ -7,17 +13,116 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  FlatList,
+  StatusBar,
 } from 'react-native';
-import {Calendar} from 'react-native-calendars';
 import {COLORS, ROUTES} from '../../constants';
 import {CustomeButton} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {AuthContext} from '../../context/AuthProvider';
 
-const DoctorProfile = ({route}) => {
+import firestore from '@react-native-firebase/firestore';
+
+import CalendarPicker from 'react-native-calendar-picker';
+import {Button} from 'react-native-paper';
+
+import auth from '@react-native-firebase/auth';
+
+import {showMessage} from 'react-native-flash-message';
+
+const {width, height} = Dimensions.get('window');
+
+const DoctorProfile = ({route, data}) => {
   const {user} = useContext(AuthContext);
   const navigation = useNavigation();
   const routes = route.params.params;
+  const active = data.time !== '';
+
+  const bookAppointment = async () => {
+    if (active) {
+      const {name, time, date} = data;
+      try {
+        await firestore()
+          .collection('Appointments')
+          .doc(date.toISOString().substring(0, 10))
+          .update({
+            [time]: {
+              name: user.displayName,
+              docName: name,
+              date: date.toISOString().substring(0, 10),
+              time: time,
+              status: 'Active',
+            },
+          })
+          .then(() => {
+            firestore()
+              .collection('Users/' + user.uid + '/Appointments')
+              .doc(date.toISOString().substring(0, 10))
+              .set({
+                [time]: {
+                  name: user.displayName,
+                  docName: name,
+                  date: date.toISOString().substring(0, 10),
+                  time: time,
+                  status: 'Active',
+                },
+              });
+          })
+          .then(() => {
+            showMessage({
+              message: 'Booked succesfully',
+              description: 'Appointment has been successfully assigned to you',
+              type: 'success',
+              icon: 'auto',
+            });
+            navigation.navigate(ROUTES.APPOINTMENT);
+          });
+      } catch (error) {
+        if (error.code === 'firestore/not-found') {
+          try {
+            await firestore()
+              .collection('Appointments')
+              .doc(date.toISOString().substring(0, 10))
+              .set({
+                [time]: {
+                  name: user.displayName,
+                  docName: name,
+                  date: date.toISOString().substring(0, 10),
+                  time: time,
+                },
+              })
+              .then(() => {
+                firestore()
+                  .collection('Users/' + user.uid + '/Appointments')
+                  .doc(date.toISOString().substring(0, 10))
+                  .set({
+                    [time]: {
+                      name: user.displayName,
+                      docName: name,
+                      date: date.toISOString().substring(0, 10),
+                      time: time,
+                      status: 'Active',
+                    },
+                  });
+              })
+              .then(() => {
+                showMessage({
+                  message: 'Booked succesfully',
+                  description:
+                    'Appointment has been successfully assigned to you',
+                  type: 'success',
+                  icon: 'auto',
+                });
+                navigation.navigate(ROUTES.APPOINTMENT);
+              });
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+    }
+  };
+
   return (
     <View style={styles.cardContainer}>
       <View style={styles.doctorProfileContainer}>
@@ -29,77 +134,290 @@ const DoctorProfile = ({route}) => {
         </View>
         <View style={styles.doctorProfileInfo}>
           <Text style={styles.doctorName}>{routes.name}</Text>
-          <CustomeButton type="book" text={'Book'} />
+          <CustomeButton
+            type={active ? 'book' : 'Secondary'}
+            text={'Book'}
+            onPress={bookAppointment}
+          />
         </View>
       </View>
     </View>
   );
 };
 
-class GoogleCalendar extends Component {
-  render() {
-    return (
-      <View style={styles.claender}>
-        <Calendar
-          style={{
-            width: width * 0.91,
-          }}
-        />
-      </View>
-    );
-  }
-}
+const ToggleButton = props => {
+  const buttonHandler = () => {
+    props.setIsSelected(props.label);
+    if (props.onClickEvent !== null) {
+      props.onClickEvent(props.isSelected);
+    }
+  };
+  return (
+    <Button
+      disabled={props.disabled}
+      rounded
+      style={
+        props.isSelected === props.label
+          ? slotStyles.activeButton
+          : slotStyles.button
+      }
+      onPress={() => buttonHandler()}>
+      <Text style={slotStyles.timeSlotText}> {props.label}</Text>
+    </Button>
+  );
+};
 
-class TimeSlots extends Component {
-  render() {
-    return (
-      <View style={styles.cardContainer}>
-        <View style={styles.timeSlotsContainer}>
-          <Text style={styles.timeSlotsTitle}>Morning Slots</Text>
-          <View style={styles.timeSlots}>
-            <TouchableOpacity style={styles.timeSlot}>
-              <Text style={styles.timeSlotText}>9:00 AM</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.timeSlot}>
-              <Text style={styles.timeSlotText}>10:00 AM</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.timeSlot}>
-              <Text style={styles.timeSlotText}>11:00 AM</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.timeSlotsContainer}>
-          <Text style={styles.timeSlotsTitle}>Evening Slots</Text>
-          <View style={styles.timeSlots}>
-            <TouchableOpacity style={styles.timeSlot}>
-              <Text style={styles.timeSlotText}>4:00 PM</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.timeSlot}>
-              <Text style={styles.timeSlotText}>5:00 PM</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.timeSlot}>
-              <Text style={styles.timeSlotText}>6:00 PM</Text>
-            </TouchableOpacity>
-          </View>
+const TimeSlots = ({
+  date,
+  morningSlot: MorningSlot,
+  eveningSlot: EveningSlot,
+  setTime,
+}) => {
+  const [constState, setState] = useState();
+
+  const [isSelected, setIsSelected] = useState('');
+  const [isButtonSelected, setIsButtonSelected] = useState(false);
+
+  const [morningSlot, setMorningSlot] = useState(null);
+  const [eveningSlot, setEveningSlot] = useState(null);
+
+  // booked Slot
+  const bookedTimes = [];
+  const [slotItem, setSlotItem] = useState(null);
+
+  const morningData = [];
+  const eveningData = [];
+
+  useEffect(() => {
+    MorningSlot.forEach(element => {
+      const obj = {
+        label: element.Time,
+        value: element.Time,
+      };
+      morningData.push(obj);
+    });
+    setMorningSlot(morningData);
+    EveningSlot.forEach(element => {
+      const obj = {
+        label: element.Time,
+        value: element.Time,
+      };
+      eveningData.push(obj);
+    });
+    setEveningSlot(eveningData);
+  }, []);
+  useEffect(() => {
+    const fetchBookedSlot = async () => {
+      try {
+        await firestore()
+          .collection('Appointments')
+          .get()
+          .then(snapshot => {
+            snapshot.forEach(doc => {
+              const data = doc.data();
+              if (doc.id === date.toISOString().substring(0, 10)) {
+                for (const key in data) {
+                  bookedTimes.push({label: key, date: doc.id});
+                }
+              }
+            });
+          })
+          .then(() => {
+            if (bookedTimes.length !== 0) {
+              setSlotItem(() => {
+                let data = new Map();
+                for (const key in {...bookedTimes}) {
+                  data.set({...bookedTimes}[key]['label'], false);
+                }
+                return data;
+              });
+            } else {
+              setSlotItem(null);
+            }
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBookedSlot();
+  }, [date]);
+
+  useEffect(() => {
+    setTime(isSelected);
+  }, [isSelected, setTime]);
+
+  const provideslots = slot => {
+    if (slot === 'morningslot') {
+      let item;
+      if (slotItem !== null) {
+        item = morningSlot.filter(data => {
+          return slotItem.get(data.label) === false ? false : true;
+        });
+      } else {
+        item = morningSlot;
+      }
+      return item;
+    }
+    if (slot === 'evevningslot') {
+      let item;
+      if (slotItem !== null) {
+        item = eveningSlot.filter(data => {
+          return slotItem.get(data.label) === false ? false : true;
+        });
+      } else {
+        item = eveningSlot;
+      }
+      return item;
+    }
+  };
+
+  return (
+    <View style={slotStyles.cardContainer}>
+      <View style={slotStyles.timeSlotsContainer}>
+        <Text style={slotStyles.timeSlotsTitle}>Morning Slots</Text>
+        <View style={slotStyles.timeSlots}>
+          {morningSlot !== null &&
+            provideslots('morningslot').map(item => {
+              console.log(item);
+              return (
+                <ToggleButton
+                  key={item.label}
+                  type="Syringe"
+                  isSelected={isSelected}
+                  setIsSelected={setIsSelected}
+                  label={item.label}
+                  value={item.value}
+                  onClickEvent={data => setIsButtonSelected(data)}
+                />
+              );
+            })}
         </View>
       </View>
-    );
-  }
-}
+      <View style={slotStyles.timeSlotsContainer}>
+        <Text style={slotStyles.timeSlotsTitle}>Evening Slots</Text>
+        <View style={slotStyles.timeSlots}>
+          {eveningSlot !== null &&
+            provideslots('evevningslot').map(item => {
+              return (
+                <ToggleButton
+                  key={item.label}
+                  type="Syringe"
+                  isSelected={isSelected}
+                  setIsSelected={setIsSelected}
+                  label={item.label}
+                  value={item.value}
+                  onClickEvent={item => setIsButtonSelected(item)}
+                />
+              );
+            })}
+        </View>
+      </View>
+    </View>
+  );
+};
 
 const BookingScreen = ({route}) => {
+  const [constantState, setState] = useState('');
+
+  // booked data
+  const [data, setData] = useState([]);
+
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState('');
+  const name = route.params.params.name;
+
+  // doctors slot
+  const [morningSlot, setMorningSlot] = useState(null);
+  const [eveningSlot, setEveningSlot] = useState(null);
+
+  useEffect(() => {
+    const fetchDoctor = async () => {
+      try {
+        await firestore()
+          .collection('Doctor')
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              const {DocName} = doc.data();
+              if (DocName === name) {
+                const data = doc.data().TimeSlot;
+                setMorningSlot(data.Morning);
+                setEveningSlot(data.Evening);
+              }
+            });
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchDoctor();
+  }, [constantState]);
+
+  useEffect(() => {
+    setData({name: name, date: date, time: time});
+  }, [time]);
+
   return (
     <View style={styles.container}>
-      <DoctorProfile route={route} />
-      <GoogleCalendar />
-      <TimeSlots />
+      <DoctorProfile route={route} data={data} />
+      <CalendarPicker
+        selectedDayColor={COLORS.clr30}
+        onDateChange={data => {
+          setDate(data);
+        }}
+      />
+      {morningSlot !== null && eveningSlot != null && date !== null && (
+        <TimeSlots
+          date={date}
+          morningSlot={morningSlot}
+          eveningSlot={eveningSlot}
+          setTime={setTime}
+        />
+      )}
     </View>
   );
 };
 
 export default BookingScreen;
+const slotStyles = StyleSheet.create({
+  cardContainer: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    marginVertical: 10,
+    padding: 20,
+    shadowOffset: {width: 1, height: 1},
+    shadowColor: '#333',
+    shadowOpacity: 0.3,
+    shadowRadius: 2,
+    elevation: 10,
+    flex: 1,
+  },
+  timeSlotsContainer: {
+    marginTop: 20,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+  },
+  timeSlotsTitle: {
+    fontSize: width / 20,
+  },
+  timeSlots: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-evenly',
+  },
+  activeButton: {
+    padding: 10,
+    borderWidth: 1,
+    backgroundColor: COLORS.clr30,
+  },
+  button: {
+    padding: 10,
+    borderWidth: 1,
+    backgroundColor: COLORS.bgclr,
+  },
+});
 
-const {width, height} = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -173,31 +491,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 10,
-  },
-  timeSlotsContainer: {
-    marginTop: 20,
-  },
-  timeSlotsTitle: {
-    fontWeight: 'bold',
-    fontSize: 18,
-    color: '#2D2D2D',
-    marginBottom: 10,
-  },
-  timeSlots: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  timeSlot: {
-    backgroundColor: COLORS.clr30,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    borderRadius: 5,
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  timeSlotText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
 });

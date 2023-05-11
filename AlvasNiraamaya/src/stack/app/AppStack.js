@@ -2,7 +2,6 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {DeskTopScreen} from '../../screens';
 import {Navigation} from '../../global';
 // Firebase
-import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {useContext} from 'react';
 import {AuthContext} from '../../context/AuthProvider';
@@ -20,6 +19,7 @@ const AppStack = () => {
       setUserform(true);
     } else {
       // usersRef.set({...}) // create the document
+      setUserform(false);
     }
   });
   return <Navigation />;

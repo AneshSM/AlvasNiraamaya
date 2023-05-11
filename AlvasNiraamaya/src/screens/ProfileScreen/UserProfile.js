@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {CustomText, CustomeButton} from '../../components';
 import {useNavigation} from '@react-navigation/native';
 import {ROUTES} from '../../constants';
+import {AuthContext} from '../../context/AuthProvider';
 
 const UserProfile = ({name, image}) => {
   const navigation = useNavigation();
-
+  const {user} = useContext(AuthContext);
   return (
     <View style={styles.topCard}>
       <View style={styles.userProfile}>

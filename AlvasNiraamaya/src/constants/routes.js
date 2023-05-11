@@ -32,6 +32,7 @@ export default {
 
   APPOINTMENT: 'Appointment',
   APPOINTMENT_DRAWER: 'Appointment Drawer',
+  APPOINTMENT_INFORMATION: 'Appointment Information',
 
   MAP: 'Map',
   MAP_DRAWER: 'Map Drawer',

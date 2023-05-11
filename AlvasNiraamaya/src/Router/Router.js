@@ -15,15 +15,15 @@ const Router = () => {
 
   useEffect(() => {
     // Handle user state changes
-    function onAuthStateChanged(user) {
-      setUser(user);
-
-      if (initializing) {
-        setInitializing(false);
-      }
+    // setUser(prev => {
+    //   return {...prev, emailVerified: true};
+    // });
+    if (initializing) {
+      setInitializing(false);
     }
-
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    const subscriber = auth().onAuthStateChanged(() => {
+      setUser(auth().currentUser);
+    });
     return subscriber; // unsubscribe on unmount
   }, [initializing, setUser]);
 

@@ -1,30 +1,30 @@
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import {View, Image, Text, StyleSheet, Dimensions} from 'react-native';
+import {CustomText, CustomeButton} from '../../components';
+
 import MapView, {Marker} from 'react-native-maps';
-import {CustomText} from '../../components';
 
 const {width, height} = Dimensions.get('window');
 const CARD_WIDTH = width * 0.9;
 const CARD_HEIGHT = height * 0.4;
-const MAP_API_KEY = 'YOUR_API_KEY';
+const MAP_API_KEY = 'AIzaSyB3K2506bgDNpSg9AqC8SxkuXy3B3u5lNo';
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    alignItems: 'center',
+    marginBottom: 110,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-evenly',
     backgroundColor: '#F5FCFF',
     width: width,
   },
-  map: {
-    width: CARD_WIDTH,
-    height: CARD_HEIGHT,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
   directionsContainer: {
-    flex: 1,
-    width: width,
+    height: height / 3.5,
+    width: width - 20,
     borderRadius: 10,
     backgroundColor: '#FFFFFF',
     elevation: 3,
@@ -57,45 +57,61 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     fontSize: 20,
   },
+  mapContainer: {
+    ...StyleSheet.absoluteFillObject,
+    flex: 1, //the container will fill the whole screen.
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
 });
 
 const GoogleMapsCard = () => {
+  const hospitalLocation = {
+    latitude: 13.062136861175764,
+    longitude: 74.97781986370683,
+    latitudeDelta: 0.0005072113930033595,
+    longitudeDelta: 0.0004422292113304138,
+  };
+  const [region, setRegion] = useState({
+    latitude: 13.062136861175764,
+    longitude: 74.97781986370683,
+    latitudeDelta: 0.0005072113930033595,
+    longitudeDelta: 0.0004422292113304138,
+  });
+  const mapRef = useRef(null);
+  const goTodestination = () => {
+    //Animate the user to new region. Complete this animation in 3 seconds
+    mapRef.current.animateToRegion(hospitalLocation, 3 * 1000);
+  };
   return (
-    <View style={styles.container}>
-      {/* <MapView
+    <View style={styles.mapContainer}>
+      <MapView
+        ref={mapRef}
         style={styles.map}
-        region={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.015,
-          longitudeDelta: 0.0121,
-          showsUserLocation: true,
-        }}>
-        <Marker
-          coordinate={{latitude: 37.78825, longitude: -122.4324}}
-          title="My Marker"
-          description="This is my marker"
+        //specify our coordinates.
+        initialRegion={region}
+        onRegionChangeComplete={data => setRegion(data)}>
+        <Marker coordinate={region} title="Alva's Niraamaya Hospital" />
+      </MapView>
+      <View style={styles.directionsContainer}>
+        <CustomeButton
+          type="Secondary"
+          onPress={() => goTodestination()}
+          text={'Go to Hospital'}
         />
-      </MapView> */}
-    </View>
-  );
-};
-
-const DirectionsCard = () => {
-  return (
-    <View style={styles.directionsContainer}>
-      <CustomText factor={20} style={styles.directionsTitle}>
-        Directions
-      </CustomText>
-      <View style={styles.directionCard}>
-        {/* Replace 'car.png' with your own icon */}
-        {/* <Image style={styles.directionIcon} source={require('./car.png')} /> */}
-        <CustomText style={styles.directionText}>From: Moodabidre</CustomText>
-      </View>
-      <View style={styles.directionCard}>
-        {/* Replace 'train.png' with your own icon */}
-        {/* <Image style={styles.directionIcon} source={require('./train.png')} /> */}
-        <CustomText style={styles.directionText}>From: Mangalore</CustomText>
+        <CustomeButton
+          type="book"
+          onPress={() => goTodestination()}
+          text={'From: Mangalore'}
+        />
+        <CustomeButton
+          type="book"
+          onPress={() => goTodestination()}
+          text={'From: Moodabidre'}
+        />
       </View>
     </View>
   );
@@ -103,9 +119,8 @@ const DirectionsCard = () => {
 
 const MapScreen = () => {
   return (
-    <View style={styles.container}>
+    <View style={styles.screen}>
       <GoogleMapsCard />
-      <DirectionsCard />
     </View>
   );
 };

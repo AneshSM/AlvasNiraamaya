@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Dimensions, StyleSheet, View} from 'react-native';
 
@@ -6,11 +6,13 @@ import {useForm} from 'react-hook-form';
 import {showMessage} from 'react-native-flash-message';
 import {useNavigation} from '@react-navigation/native';
 
+import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import {Picker} from '@react-native-picker/picker';
 
 import {AuthContext} from '../../context/AuthProvider';
 import {CustomeButton, CustomeInput} from '../CustomComponents';
-import {COLORS} from '../../constants';
+import {COLORS, ROUTES} from '../../constants';
 
 const UserForm = () => {
   const {
@@ -18,32 +20,42 @@ const UserForm = () => {
     handleSubmit,
     formState: {errors},
   } = useForm();
-  const {user} = useContext(AuthContext);
+  const {user, setUserform, setUser} = useContext(AuthContext);
   const navigation = useNavigation();
+  const [selectedGender, setselectedGender] = useState('Male');
 
   const onConfirmPressed = async data => {
-    const {name, age, gender, mobileNo, occupation, address, image} = data;
-    // Authentication
+    const {name, age, mobileNo, occupation, address, image} = data;
     try {
-      // firestore()
-      //   .collection('Users')
-      //   .doc(user.uid)
-      //   .add(
-      //     name,
-      //     age,
-      //     gender,
-      //     mobileNo,
-      //     occupation,
-      //     address,
-      //     image ? image : null,
-      //   );
-      showMessage({
-        message: 'Data added succesfully',
-        description: 'You can Edit data in your profile',
-        type: 'success',
-        icon: 'auto',
-      });
-      navigation.goBack();
+      firestore()
+        .collection('Users')
+        .doc(user.uid)
+        .set({
+          name: name,
+          age: age,
+          gender: selectedGender,
+          mobileNo: mobileNo,
+          occupation: occupation,
+          address: address,
+          image: image ? image : null,
+          email: user.email,
+        })
+        .then(() => {
+          setUserform(true);
+          auth()
+            .currentUser.updateProfile({
+              displayName: name,
+              photoURL: image ? image : null,
+            })
+            .catch(err => console.log(err));
+          showMessage({
+            message: 'Data added succesfully',
+            description: 'You can Edit data in your profile',
+            type: 'success',
+            icon: 'auto',
+          });
+          navigation.navigate(ROUTES.DOCTOR);
+        });
     } catch (error) {
       console.log(error);
     }
@@ -51,30 +63,13 @@ const UserForm = () => {
   const onCancelPressed = () => {
     navigation.goBack();
   };
-  // const initializeUserData = () => {
-  //   firestore().collection('Users').doc(user.uid).set({
-  //     name: user.displayName,
-  //     age: 0,
-  //     eamil: user.email,
-  //     gender: '',
-  //     occupation: '',
-  //     mobileNo: user.phoneNumber,
-  //     image: user.photoURL,
-  //     address: '',
-  //   });
-  // };
-  // useEffect(() => {
-  //   initializeUserData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-  // console.log(user);
 
   return (
     <View style={styles.bottomCard}>
       <ScrollView>
         <CustomeInput
           placeholder="Name"
-          name="Name"
+          name="name"
           control={control}
           rules={{
             required: 'Name is required',
@@ -86,8 +81,9 @@ const UserForm = () => {
         />
         <CustomeInput
           placeholder="Age"
-          name="Age"
+          name="age"
           control={control}
+          keyboardType="phone-pad"
           rules={{
             required: 'Age is required',
             minLength: {
@@ -96,21 +92,21 @@ const UserForm = () => {
             },
           }}
         />
-        <CustomeInput
-          placeholder="Gender"
-          name="Gender"
-          control={control}
-          rules={{
-            required: 'Gender is required',
-            minLength: {
-              value: 4,
-              message: 'Gender should be minimum 4 characters long',
-            },
-          }}
-        />
+
+        <Picker
+          selectedValue={selectedGender}
+          onValueChange={(itemValue, itemIndex) =>
+            setselectedGender(itemValue)
+          }>
+          <Picker.Item label="Male" value="Male" />
+          <Picker.Item label="Female" value="Female" />
+          <Picker.Item label="Transgender" value="Transgender" />
+          <Picker.Item label="Non-binary" value="Non-binary" />
+        </Picker>
+
         <CustomeInput
           placeholder="Mobile Number"
-          name="Mobile_Number"
+          name="mobileNo"
           control={control}
           keyboardType="phone-pad"
           rules={{
@@ -123,7 +119,7 @@ const UserForm = () => {
         />
         <CustomeInput
           placeholder="Occupation"
-          name="Occupation"
+          name="occupation"
           control={control}
           rules={{
             required: 'Occupation is required',
@@ -135,7 +131,7 @@ const UserForm = () => {
         />
         <CustomeInput
           placeholder="Address"
-          name="Address"
+          name="address"
           control={control}
           numberOfLines={5}
           multiline={true}
@@ -189,5 +185,9 @@ const styles = StyleSheet.create({
     elevation: 3,
     padding: 30,
     flex: 1,
+  },
+  gender: {
+    borderWidth: 1,
+    borderColor: '#e8e8e8',
   },
 });
