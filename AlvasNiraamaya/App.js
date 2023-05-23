@@ -8,10 +8,10 @@
 import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
+import FlashMessage from 'react-native-flash-message';
 
 import Router from './src/Router/Router';
 import {AuthProvider} from './src/context/AuthProvider';
-import FlashMessage from 'react-native-flash-message';
 
 function App() {
   useEffect(() => {

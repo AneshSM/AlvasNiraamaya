@@ -10,14 +10,19 @@ import {AuthContext} from '../../../context/AuthProvider';
 
 const SocialSignInButtons = () => {
   const {googleSignIn} = useContext(AuthContext);
-  const onSignInGoogle = () => {
-    googleSignIn();
-    showMessage({
-      message: 'SignedIn succesfully',
-      description: "Welcome to Alva's Niraamaya Application",
-      type: 'success',
-      icon: 'auto',
-    });
+  const onSignInGoogle = async () => {
+    try {
+      await googleSignIn().then(() => {
+        showMessage({
+          message: 'SignedIn succesfully',
+          description: "Welcome to Alva's Niraamaya Application",
+          type: 'success',
+          icon: 'auto',
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const onSignInFaceBook = () => {
     console.warn('FaceBook');
