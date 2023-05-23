@@ -1,15 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
-import {CustomText, CustomeButton} from '../../components';
-import {ScrollView} from 'react-native-gesture-handler';
-import {COLORS, ROUTES} from '../../constants';
+
 import {useNavigation} from '@react-navigation/native';
+import {ScrollView} from 'react-native-gesture-handler';
+
+import firestore from '@react-native-firebase/firestore';
+
+import {CustomText, CustomeButton} from '../../components';
+import {COLORS, ROUTES} from '../../constants';
 
 const InformationScreen = ({route}) => {
   const navigation = useNavigation();
   const routes = route.params.params;
   const name = routes.doctor;
   const dept = routes.title;
+
   const navigate = () => {
     navigation.navigate(ROUTES.BOOKING, {
       params: {name, dept},

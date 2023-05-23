@@ -7,186 +7,101 @@ import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {COLORS, ROUTES} from '../../constants';
 import {AuthContext} from '../../context/AuthProvider';
 import {CustomeButton} from '../../components';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
-function ActiveAppointments() {
+function AppointmentCard({value}) {
+  const navigation = useNavigation();
+  const {docName, date, status} = value;
+
+  const navigate = () => {
+    navigation.navigate(ROUTES.APPOINTMENT_INFORMATION, {
+      params: {value},
+    });
+  };
   return (
-    <ScrollView>
+    <CustomeButton onPress={navigate} style={styles.card_button}>
       <Card style={styles.card}>
         <Card.Title
-          title="John Doe"
-          subtitle="Dentist"
-          left={props => <Avatar.Icon {...props} icon="account" />}
+          title={docName}
+          subtitle={date}
+          style={styles.card_title}
+          left={prop => (
+            <Avatar.Icon
+              {...prop}
+              icon={
+                status === 'Active'
+                  ? 'check'
+                  : status === 'Cancel'
+                  ? 'cancel'
+                  : 'history'
+              }
+              style={{
+                backgroundColor:
+                  status === 'Active'
+                    ? COLORS.clr30
+                    : status === 'Cancel'
+                    ? 'tomato'
+                    : 'grey',
+              }}
+            />
+          )}
         />
-        <Card.Content>
-          <Text style={styles.title}>Appointment Details</Text>
-          <List.Item
-            title="Doctor"
-            description="Dr. John Doe"
-            left={props => <List.Icon {...props} icon="doctor" />}
-          />
-          <List.Item
-            title="Date"
-            description="April 12, 2023"
-            left={props => <List.Icon {...props} icon="calendar" />}
-          />
-          <List.Item
-            title="Time"
-            description="10:00 AM"
-            left={props => <List.Icon {...props} icon="clock-outline" />}
-          />
-          <List.Item
-            title="Location"
-            description="123 Main St"
-            left={props => <List.Icon {...props} icon="map-marker" />}
-          />
-        </Card.Content>
-        <Card.Actions>
-          <Icon name="phone" size={30} />
-          <Icon name="message" size={30} />
-        </Card.Actions>
       </Card>
+    </CustomeButton>
+  );
+}
+
+function ActiveAppointments({appointments}) {
+  const pastData = [];
+  appointments !== null &&
+    appointments.forEach((value, key) => {
+      if (value.status === 'Active') {
+        pastData.push(<AppointmentCard key={key} value={value} />);
+      }
+    });
+
+  return (
+    <ScrollView
+      style={styles.ScrollView}
+      contentContainerStyle={styles.ScrollViewContentContainer}>
+      {pastData}
     </ScrollView>
   );
 }
 
 function PastAppointments({appointments}) {
-  const navigation = useNavigation();
-  const navigate = () => {
-    navigation.navigate(ROUTES.APPOINTMENT_INFORMATION, {
-      params: {appointments},
-    });
-  };
   const pastData = [];
   appointments !== null &&
     appointments.forEach((value, key) => {
-      console.log(value);
-      const {name, docName, date, time, status} = value;
-      pastData.push(
-        // <Card key={key} style={styles.card}>
-        //   <Card.Title
-        //     title={docName}
-        //     subtitle={date}
-        //     style={styles.card_title}
-        //     left={props => (
-        //       <Avatar.Icon
-        //         {...props}
-        //         icon={
-        //           status === 'Active'
-        //             ? 'check'
-        //             : status === 'Cancel'
-        //             ? 'cancel'
-        //             : 'history'
-        //         }
-        //         style={{
-        //           backgroundColor:
-        //             status === 'Active'
-        //               ? COLORS.clr30
-        //               : status === 'Cancel'
-        //               ? 'tomato'
-        //               : 'grey',
-        //         }}
-        //       />
-        //     )}
-        //   />
-        //   {/* <Card.Content>
-        //     <Text style={styles.title}>Appointment Details</Text>
-        //     <List.Item
-        //       title="Doctor"
-        //       description={docName}
-        //       left={props => <List.Icon {...props} icon="doctor" />}
-        //     />
-        //     <List.Item
-        //       title="Date"
-        //       description={date}
-        //       left={props => <List.Icon {...props} icon="calendar" />}
-        //     />
-        //     <List.Item
-        //       title="Time"
-        //       description={time}
-        //       left={props => <List.Icon {...props} icon="clock-outline" />}
-        //     />
-        //   </Card.Content>
-        //   <Card.Actions>
-        //     <Icon name="phone" size={30} />
-        //     <Icon name="message" size={30} />
-        //   </Card.Actions> */}
-        // </Card>,
-        <CustomeButton onPress={navigate} style={styles.card_button}>
-          <Card key={key} style={styles.card}>
-            <Card.Title
-              title={docName}
-              subtitle={date}
-              style={styles.card_title}
-              left={props => (
-                <Avatar.Icon
-                  {...props}
-                  icon={
-                    status === 'Active'
-                      ? 'check'
-                      : status === 'Cancel'
-                      ? 'cancel'
-                      : 'history'
-                  }
-                  style={{
-                    backgroundColor:
-                      status === 'Active'
-                        ? COLORS.clr30
-                        : status === 'Cancel'
-                        ? 'tomato'
-                        : 'grey',
-                  }}
-                />
-              )}
-            />
-          </Card>
-        </CustomeButton>,
-      );
+      pastData.push(<AppointmentCard key={key} value={value} />);
     });
 
-  return <ScrollView>{pastData}</ScrollView>;
+  return (
+    <ScrollView
+      style={styles.ScrollView}
+      contentContainerStyle={styles.ScrollViewContentContainer}>
+      {pastData}
+    </ScrollView>
+  );
 }
 
-function CanceledAppointments() {
+function CanceledAppointments({appointments}) {
+  const pastData = [];
+  appointments !== null &&
+    appointments.forEach((value, key) => {
+      value.status === 'Cancel' &&
+        pastData.push(<AppointmentCard key={key} value={value} />);
+    });
+
   return (
-    <ScrollView>
-      <Card style={styles.card}>
-        <Card.Title
-          title="Tom Smith"
-          subtitle="Cardiologist"
-          left={props => <Avatar.Icon {...props} icon="account" />}
-        />
-        <Card.Content>
-          <Text style={styles.title}>Appointment Details</Text>
-          <List.Item
-            title="Doctor"
-            description="Dr. Tom Smith"
-            left={props => <List.Icon {...props} icon="doctor" />}
-          />
-          <List.Item
-            title="Date"
-            description="March 5, 2023"
-            left={props => <List.Icon {...props} icon="calendar" />}
-          />
-          <List.Item
-            title="Time"
-            description="9:00 AM"
-            left={props => <List.Icon {...props} icon="clock-outline" />}
-          />
-          <List.Item
-            title="Location"
-            description="789 Fifth Ave"
-            left={props => <List.Icon {...props} icon="map-marker" />}
-          />
-        </Card.Content>
-        <Card.Actions>
-          <Icon name="phone" size={30} />
-          <Icon name="message" size={30} />
-        </Card.Actions>
-      </Card>
+    <ScrollView
+      style={styles.ScrollView}
+      contentContainerStyle={styles.ScrollViewContentContainer}>
+      {pastData}
     </ScrollView>
   );
 }
@@ -197,26 +112,29 @@ function AppointmentScreen({route}) {
   const routes = route.params ? route.params.params : '';
 
   const {user} = useContext(AuthContext);
+  const isFocused = useIsFocused();
 
   const [appointments, setAppointments] = useState(null);
 
   useEffect(() => {
     const data = new Map();
-    firestore()
-      .collection('Users/' + user.uid + '/Appointments')
-      .get()
-      .then(snapshot => {
-        snapshot.forEach(doc => {
-          const items = doc.data();
-          for (const key in items) {
-            data.set(items[key]['date'], items[key]);
-          }
+    if (isFocused) {
+      firestore()
+        .collection('Users/' + user.uid + '/Appointments')
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            const items = doc.data();
+            for (const key in items) {
+              data.set(items[key]['date'], items[key]);
+            }
+          });
+        })
+        .then(() => {
+          setAppointments(new Map([...data.entries()].reverse()));
         });
-      })
-      .then(() => {
-        setAppointments(new Map([...data.entries()].reverse()));
-      });
-  }, []);
+    }
+  }, [isFocused]);
   return (
     <Tab.Navigator
       style={styles.container}
@@ -243,6 +161,7 @@ function AppointmentScreen({route}) {
     </Tab.Navigator>
   );
 }
+
 const styles = StyleSheet.create({
   card: {
     marginHorizontal: 10,
@@ -265,5 +184,46 @@ const styles = StyleSheet.create({
   container: {
     marginBottom: 100,
   },
+  ScrollView: {},
+  ScrollViewContentContainer: {},
 });
 export default AppointmentScreen;
+
+// return (
+//   <ScrollView>
+//     <Card style={styles.card}>
+//       <Card.Title
+//         title="Tom Smith"
+//         subtitle="Cardiologist"
+//         left={props => <Avatar.Icon {...props} icon="account" />}
+//       />
+//       <Card.Content>
+//         <Text style={styles.title}>Appointment Details</Text>
+//         <List.Item
+//           title="Doctor"
+//           description="Dr. Tom Smith"
+//           left={props => <List.Icon {...props} icon="doctor" />}
+//         />
+//         <List.Item
+//           title="Date"
+//           description="March 5, 2023"
+//           left={props => <List.Icon {...props} icon="calendar" />}
+//         />
+//         <List.Item
+//           title="Time"
+//           description="9:00 AM"
+//           left={props => <List.Icon {...props} icon="clock-outline" />}
+//         />
+//         <List.Item
+//           title="Location"
+//           description="789 Fifth Ave"
+//           left={props => <List.Icon {...props} icon="map-marker" />}
+//         />
+//       </Card.Content>
+//       <Card.Actions>
+//         <Icon name="phone" size={30} />
+//         <Icon name="message" size={30} />
+//       </Card.Actions>
+//     </Card>
+//   </ScrollView>
+// );
