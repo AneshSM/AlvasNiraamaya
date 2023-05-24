@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 
 import {useNavigation} from '@react-navigation/native';
@@ -8,16 +8,19 @@ import firestore from '@react-native-firebase/firestore';
 
 import {CustomText, CustomeButton} from '../../components';
 import {COLORS, ROUTES} from '../../constants';
+import {AuthContext} from '../../context/AuthProvider';
 
 const InformationScreen = ({route}) => {
   const navigation = useNavigation();
   const routes = route.params.params;
   const name = routes.doctor;
   const dept = routes.title;
+  const imageURL = routes.imageURL;
+  const {userform} = useContext(AuthContext);
 
   const navigate = () => {
     navigation.navigate(ROUTES.BOOKING, {
-      params: {name, dept},
+      params: {name, dept, imageURL},
     });
   };
 
@@ -34,7 +37,9 @@ const InformationScreen = ({route}) => {
         <CustomText style={styles.description}>{routes.info}</CustomText>
         <CustomeButton
           type="book"
-          onPress={navigate}
+          onPress={
+            userform ? navigate : () => navigation.navigate(ROUTES.USER_FORM)
+          }
           text={'Book Appointment'}
           factor={18}
         />

@@ -102,7 +102,7 @@ const GoogleMapsCard = () => {
           onPress={() => goTodestination()}
           text={'Go to Hospital'}
         />
-        <CustomeButton
+        {/* <CustomeButton
           type="book"
           onPress={() => goTodestination()}
           text={'From: Mangalore'}
@@ -111,7 +111,7 @@ const GoogleMapsCard = () => {
           type="book"
           onPress={() => goTodestination()}
           text={'From: Moodabidre'}
-        />
+        /> */}
       </View>
     </View>
   );

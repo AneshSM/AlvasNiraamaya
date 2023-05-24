@@ -206,6 +206,7 @@ const TimeSlots = ({
     });
     setEveningSlot(eveningData);
   }, []);
+
   useEffect(() => {
     const fetchBookedSlot = async () => {
       try {
@@ -278,7 +279,6 @@ const TimeSlots = ({
         <View style={slotStyles.timeSlots}>
           {morningSlot !== null &&
             provideslots('morningslot').map(item => {
-              console.log(item);
               return (
                 <ToggleButton
                   key={item.label}
@@ -325,7 +325,7 @@ const BookingScreen = ({route}) => {
   const [date, setDate] = useState(null);
   const [time, setTime] = useState('');
   const name = route.params.params.name;
-
+  const [imageURL, setImageURL] = useState();
   // doctors slot
   const [morningSlot, setMorningSlot] = useState(null);
   const [eveningSlot, setEveningSlot] = useState(null);
@@ -338,8 +338,9 @@ const BookingScreen = ({route}) => {
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {
-              const {DocName} = doc.data();
+              const {DocName, Image} = doc.data();
               if (DocName === name) {
+                setImageURL(Image);
                 const data = doc.data().TimeSlot;
                 setMorningSlot(data.Morning);
                 setEveningSlot(data.Evening);
@@ -354,8 +355,15 @@ const BookingScreen = ({route}) => {
   }, [constantState]);
 
   useEffect(() => {
-    setData({name: name, date: date, time: time});
+    setData({name: name, date: date, time: time, imageURL: imageURL});
   }, [time]);
+
+  useEffect(() => {
+    date != null &&
+      new Date().toISOString().substring(0, 10) >
+        date.toISOString().substring(0, 10) &&
+      setDate(null);
+  }, [date]);
 
   return (
     <View style={styles.container}>
