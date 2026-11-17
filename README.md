@@ -1,3 +1,5 @@
+> **Status: archived (Nov 2026).** My college major project: a patient app for an Ayurvedic hospital. Not maintained; kept for reference.
+
 # AlvasNiraamaya
 Major Project:
 AlvasNiraamaya is a React Native mobile application for an ayurvedic hospital. It is designed to help patients book appointments, receive reminders, and access information about the hospital and its services.
